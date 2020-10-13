@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class UserFilter {
 
-    private boolean logOutput;
+    private final boolean logOutput;
 
     public UserFilter(boolean logOutput){
         this.logOutput = logOutput;
@@ -22,7 +22,11 @@ public class UserFilter {
         }
 
         if(logOutput){
-            System.out.println(mySubstitutions);
+            StringBuilder stringBuilder = new StringBuilder("Substitutions for ").append(myClass.getFullName()).append("\n");
+            for(Substitution substitution : mySubstitutions){
+                stringBuilder.append("- ").append(substitution).append("\n");
+            }
+            System.out.println(stringBuilder.toString());
         }
         return mySubstitutions;
     }

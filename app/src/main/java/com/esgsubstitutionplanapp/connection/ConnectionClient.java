@@ -5,18 +5,25 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
 import java.io.IOException;
-import java.net.URI;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLEncoder;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class ConnectionClient {
 
-    private static final HttpClient client = HttpClient.newBuilder().followRedirects(HttpClient.Redirect.NEVER).build();
+    private static final OkHttpClient client = new OkHttpClient()
+            .newBuilder()
+            .followRedirects(false)
+            .followSslRedirects(false)
+            .build();
     private static final String ID_FORM = "login-form";
 
     private final String url;
@@ -37,30 +44,29 @@ public class ConnectionClient {
     /**
      * connects to given URL, logs in using provided credentials and returns HTML
      * @return full and untouched HTML of the requested page
-     * @throws IOException see Java 11 HttpClient.send
-     * @throws InterruptedException see Java 11 HttpClient.send
+     * @throws IOException see OkHttpClient
      */
-    public String getHtml() throws Exception{
+    public String getHtml() throws IOException {
         setSessionValues();
         login();
         return getContent();
     }
 
-    private void setSessionValues() throws Exception {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .GET()
-                .setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36")
+    private void setSessionValues() throws IOException {
+        Request request = new Request.Builder()
+                .url(new URL(url))
+                .get()
+                .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36")
                 .build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        Response response = client.newCall(request).execute();
 
         StringBuilder stringBuilder = new StringBuilder();
-        for(String s : response.headers().allValues("set-cookie")){
-            stringBuilder.append(";").append(s);
+        for(String s : response.headers("set-cookie")){
+            stringBuilder.append(s).append(";");
         }
         sessionCookieValue = stringBuilder.toString();
 
-        String html = response.body();
+        String html = response.body().string();
         Document document = Jsoup.parse(html);
         Element form = document.getElementById(ID_FORM);
         for(Element element : form.child(0).children()){
@@ -73,44 +79,44 @@ public class ConnectionClient {
                 return;
             }
         }
-        throw new Exception("Kein Security-Token gefunden");
     }
 
-    private void login() throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .POST(buildPostParams(user, password))
-                .setHeader("cookie", sessionCookieValue)
-                .setHeader("content-type", "application/x-www-form-urlencoded")
-                .setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36")
-                .setHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
-                .setHeader("accept-language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7")
-                .setHeader("cache-control", "max-age=0")
-                .setHeader("sec-fetch-dest", "document")
-                .setHeader("sec-fetch-mode", "navigate")
-                .setHeader("sec-fetch-site", "?1")
-                .setHeader("sec-fetch-user", "1")
-                .setHeader("upgrade-insecure-requests", "1")
-                .setHeader("referer", url)
-                .setHeader("origin", "https://www.esg-landau.de")
-                .build();
+    private void login() throws IOException {
+        MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+        RequestBody body = RequestBody.create(mediaType, buildPostParams(user, password));
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        Request request = new Request.Builder()
+                .url(new URL(url))
+                .post(body)
+                .addHeader("cookie", sessionCookieValue)
+                .addHeader("content-type", "application/x-www-form-urlencoded")
+                .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36")
+                .addHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
+                .addHeader("accept-language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7")
+                .addHeader("cache-control", "max-age=0")
+                .addHeader("sec-fetch-dest", "document")
+                .addHeader("sec-fetch-mode", "navigate")
+                .addHeader("sec-fetch-site", "?1")
+                .addHeader("sec-fetch-user", "1")
+                .addHeader("upgrade-insecure-requests", "1")
+                .addHeader("referer", url)
+                .addHeader("origin", "https://www.esg-landau.de")
+                .build();
+        Response response = client.newCall(request).execute();
 
         StringBuilder stringBuilder = new StringBuilder();
-        for(String s : response.headers().allValues("set-cookie")){
-            stringBuilder.append(";").append(s);
+        for(String s : response.headers("set-cookie")){
+            stringBuilder.append(s).append(";");
         }
         sessionCookieValue = stringBuilder.toString();
         if (logOutput) {
-            System.out.println("StatusCode: " + response.statusCode());
+            System.out.println("StatusCode: " + response.code());
             System.out.println("Headers: " + response.headers());
-            System.out.println("Redirect: " + response.uri());
             System.out.println("New Cookie: " + sessionCookieValue);
         }
     }
 
-    private HttpRequest.BodyPublisher buildPostParams(String user, String pw) {
+    private String buildPostParams(String user, String pw) throws UnsupportedEncodingException {
         Map<String, String> data = new HashMap<>();
         data.put("username", user);
         data.put("password", pw);
@@ -120,46 +126,45 @@ public class ConnectionClient {
         data.put("Submit", "");
         data.put("return", "aHR0cHM6Ly93d3cuZXNnLWxhbmRhdS5kZS91bnRlcnN0dWV0enVuZy9pbmZvcm1hdGlvbmVuL3ZlcnRyZXR1bmdzcGxhbg==");
 
-        var builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder();
         for (Map.Entry<String, String> entry : data.entrySet()) {
             if (builder.length() > 0) {
                 builder.append("&");
             }
-            builder.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8));
+            builder.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
             builder.append("=");
-            builder.append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8));
+            builder.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
         }
         String params = builder.toString();
         if(logOutput){
             System.out.println("Parameter " + params);
         }
-        return HttpRequest.BodyPublishers.ofString(params);
+        return params;
     }
 
-    private String getContent() throws IOException, InterruptedException {
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .GET()
-                .setHeader("cookie", sessionCookieValue)
-                .setHeader("referer", url)
-                .setHeader("sec-fetch-dest", "document")
-                .setHeader("sec-fetch-mode", "navigate")
-                .setHeader("sec-fetch-site", "?1")
-                .setHeader("sec-fetch-user", "1")
-                .setHeader("upgrade-insecure-requests", "1")
-                .setHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36")
-                .setHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
-                .setHeader("accept-language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7")
-                .setHeader("cache-control", "max-age=0")
+    private String getContent() throws IOException {
+        Request request = new Request.Builder()
+                .url(new URL(url))
+                .get()
+                .addHeader("cookie", sessionCookieValue)
+                .addHeader("referer", url)
+                .addHeader("sec-fetch-dest", "document")
+                .addHeader("sec-fetch-mode", "navigate")
+                .addHeader("sec-fetch-site", "?1")
+                .addHeader("sec-fetch-user", "1")
+                .addHeader("upgrade-insecure-requests", "1")
+                .addHeader("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36")
+                .addHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9")
+                .addHeader("accept-language", "de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7")
+                .addHeader("cache-control", "max-age=0")
                 .build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        Response response = client.newCall(request).execute();
+        String body = response.body().string();
         if (logOutput) {
-            System.out.println("StatusCode: " + response.statusCode());
+            System.out.println("StatusCode: " + response.code());
             System.out.println("Headers: " + response.headers());
-            System.out.println("Redirect: " + response.uri());
-            System.out.println("Html: " + response.body().length());
+            System.out.println("Html: " + body.length());
         }
-        return response.body();
+        return body;
     }
 }
