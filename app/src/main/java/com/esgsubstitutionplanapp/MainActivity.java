@@ -1,4 +1,4 @@
-package com.example.esgsubstitutionplanapp;
+package com.esgsubstitutionplanapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 

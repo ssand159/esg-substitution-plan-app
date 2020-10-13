@@ -1,5 +1,6 @@
 *.iml
 .idea/
+app/src/main/java/com/esgsubstitutionplanapp/ignorepackage/
 .gradle
 /local.properties
 /.idea/caches
