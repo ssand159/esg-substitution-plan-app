@@ -11,7 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.esgsubstitutionplanapp.SubstitutionPlanActivity"></activity>
+        <activity android:name="com.esgsubstitutionplanapp.SettingsActivity"></activity>
+        <activity
+            android:name=".ui.login.SettingsActivity"
+            android:label="@string/title_activity_settings" />
+        <activity android:name="com.esgsubstitutionplanapp.SubstitutionPlanActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

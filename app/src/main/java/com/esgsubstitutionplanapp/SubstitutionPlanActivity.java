@@ -18,10 +18,6 @@ import java.util.ArrayList;
 
 public class SubstitutionPlanActivity extends AppCompatActivity {
 
-    private static final String url = TestData.url;
-    private static final String username = TestData.username;
-    private static final String password = TestData.password;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +27,7 @@ public class SubstitutionPlanActivity extends AppCompatActivity {
     public void refresh (View view){
         try {
             // get content
-            ConnectionClient connectionClient = new ConnectionClient(url, username, password, false);
+            ConnectionClient connectionClient = new ConnectionClient(DB.endpoint, DB.username, DB.password, false);
             String html = connectionClient.getHtml();
 
             // parse content

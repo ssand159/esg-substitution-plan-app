@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">ESG Vertretungsplan</string>
+    <string name="title_activity_settings">Einstellungen</string>
+    <string name="credentialsTitle">Zugangsdaten</string>
+    <string name="gradeTitle">Dein Filter</string>
+    <string name="nutzername">Nutzername</string>
+    <string name="passwort">Passwort</string>
+    <string name="saveButton">Speichern</string>
 </resources>
