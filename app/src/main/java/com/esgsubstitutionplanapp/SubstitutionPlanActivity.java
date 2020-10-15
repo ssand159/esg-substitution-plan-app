@@ -36,7 +36,7 @@ public class SubstitutionPlanActivity extends AppCompatActivity {
 
             // filter content according to user settings
             UserFilter userFilter= new UserFilter(true);
-            ArrayList<Substitution> mySubstitutions = userFilter.getSubstitutionsForMyClass(allSubstitutions, TestData.myClass);
+            ArrayList<Substitution> mySubstitutions = userFilter.getSubstitutionsForMyClass(allSubstitutions, DB.myClass);
 
             // TODO show in app
         } catch (Exception e) {
