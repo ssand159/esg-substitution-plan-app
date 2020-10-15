@@ -10,7 +10,7 @@ import com.esgsubstitutionplanapp.content.ContentParser;
 import com.esgsubstitutionplanapp.content.Substitution;
 import com.esgsubstitutionplanapp.content.UserFilter;
 import com.esgsubstitutionplanapp.ignorepackage.TestData;
-import com.example.esgsubstitutionplanapp.R;
+import com.esgsubstitutionplanapp.R;
 
 import org.apache.commons.collections4.MultiValuedMap;
 
