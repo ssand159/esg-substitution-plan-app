@@ -1,5 +1,12 @@
 <resources>
+    <!-- global -->
     <string name="app_name">ESG Vertretungsplan</string>
+
+    <!-- main activity -->
+    <string name="title_activity_main">Vertretungsplan</string>
+    <string name="settingsButton">Einstellungen</string>
+
+    <!-- Settings activity -->
     <string name="title_activity_settings">Einstellungen</string>
     <string name="credentialsTitle">Zugangsdaten</string>
     <string name="gradeTitle">Mein Filter</string>

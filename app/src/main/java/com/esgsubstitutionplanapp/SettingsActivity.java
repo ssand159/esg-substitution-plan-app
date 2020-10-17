@@ -25,8 +25,6 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
     private Spinner gradeSpinner;
     private Spinner letterSpinner;
 
-    private int oldLetterPosition = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +70,10 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
 
         if(!validate(user, password)){
             return;
+        }
+
+        if(grade.equals("11") || grade.equals("12") || grade.equals("13")){
+            letter = "-";
         }
 
         SharedPreferences.Editor editor = getSharedPreferences("userdata", MODE_PRIVATE).edit();
@@ -121,11 +123,8 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(parent.getId() == R.id.grade){
             if(position >= 6){
-                oldLetterPosition = letterSpinner.getSelectedItemPosition();
                 letterSpinner.setVisibility(View.INVISIBLE);
-                letterSpinner.setSelection(0);
             } else {
-                letterSpinner.setSelection(oldLetterPosition);
                 letterSpinner.setVisibility(View.VISIBLE);
             }
         }

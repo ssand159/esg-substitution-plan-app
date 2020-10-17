@@ -26,17 +26,6 @@ public class SubstitutionPlanActivity extends AppCompatActivity {
 
     public void refresh (View view){
         try {
-            // get content
-            ConnectionClient connectionClient = new ConnectionClient(DB.endpoint, DB.username, DB.password, false);
-            String html = connectionClient.getHtml();
-
-            // parse content
-            ContentParser contentParser = new ContentParser(false);
-            MultiValuedMap<String, Substitution> allSubstitutions = contentParser.createSubstitutionList(html);
-
-            // filter content according to user settings
-            UserFilter userFilter= new UserFilter(true);
-            ArrayList<Substitution> mySubstitutions = userFilter.getSubstitutionsForMyClass(allSubstitutions, DB.myClass);
 
             // TODO show in app
         } catch (Exception e) {

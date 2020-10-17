@@ -14,6 +14,23 @@ public class Substitution {
     private String bemerkung;
     private String verlegtVon;
 
+    @Override
+    public String toString() {
+        return "Substitution{" +
+                "klassen='" + klassen + "\n" +
+                ", datum='" + datum + "\n" +
+                ", std='" + std + "\n" +
+                ", art='" + art + "\n" +
+                ", vertretung='" + vertretung + "\n" +
+                ", fach='" + fach + "\n" +
+                ", raum='" + raum + "\n" +
+                ", fach2='" + fach2 + "\n" +
+                ", zuVertreten='" + zuVertreten + "\n" +
+                ", bemerkung='" + bemerkung + "\n" +
+                ", verlegtVon='" + verlegtVon + "\n" +
+                '}';
+    }
+
     public String getKlassen() {
         return klassen;
     }
