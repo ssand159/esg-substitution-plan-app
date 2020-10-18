@@ -4,7 +4,8 @@
 
     <!-- main activity -->
     <string name="title_activity_main">Vertretungsplan</string>
-    <string name="settingsButton">Einstellungen</string>
+    <string name="buttonSettings">Einstellungen</string>
+    <string name="buttonAllClasses">Alle</string>
 
     <!-- Settings activity -->
     <string name="title_activity_settings">Einstellungen</string>

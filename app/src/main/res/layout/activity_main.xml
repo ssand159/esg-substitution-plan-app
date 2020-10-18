@@ -23,7 +23,7 @@
         android:clickable="true"
         android:focusable="true"
         android:onClick="startSettings"
-        android:contentDescription="@string/settingsButton" />
+        android:contentDescription="@string/buttonSettings" />
     </LinearLayout>
 
     <TextView
@@ -65,7 +65,7 @@
             android:layout_marginBottom="10dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:background="@color/activeSelector"
             />
         <TextView
@@ -78,9 +78,9 @@
             android:onClick="allClassesClicked"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:layout_marginBottom="10dp"
-            android:text="Alle"
+            android:text="@string/buttonAllClasses"
             android:layout_weight="1"
             android:background="@color/inActiveSelector"/>
     </LinearLayout>

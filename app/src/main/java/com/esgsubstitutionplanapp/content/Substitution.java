@@ -1,5 +1,7 @@
 package com.esgsubstitutionplanapp.content;
 
+import org.jetbrains.annotations.NotNull;
+
 public class Substitution {
 
     private String klassen;
@@ -14,6 +16,7 @@ public class Substitution {
     private String bemerkung;
     private String verlegtVon;
 
+    @NotNull
     @Override
     public String toString() {
         return "Substitution{" +
@@ -118,4 +121,5 @@ public class Substitution {
     public void setVerlegtVon(String verlegtVon) {
         this.verlegtVon = verlegtVon;
     }
+
 }

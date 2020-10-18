@@ -5,7 +5,7 @@ android {
 
     defaultConfig {
         applicationId "com.vertretungsplan"
-        minSdkVersion 14
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -30,7 +30,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     implementation 'org.jsoup:jsoup:1.11.1'
-    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.annotation:annotation:1.1.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
@@ -40,8 +40,6 @@ dependencies {
     // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
     implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
     // https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp
-    implementation ("com.squareup.okhttp3:okhttp:3.12.12"){
-        force = true //API 19 support
-    }
+    implementation 'com.squareup.okhttp3:okhttp:4.9.0'
 
 }

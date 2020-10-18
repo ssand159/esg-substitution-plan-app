@@ -7,12 +7,18 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 public class ContentParser {
 
     private static final String ID_TABLE = "schuelerVertretungsplan";
-    private boolean logOutput;
+    private final SortedSet<Date> dates = new TreeSet<>();
+    private final boolean logOutput;
 
     public ContentParser (boolean logOutput){
         this.logOutput = logOutput;
@@ -21,12 +27,13 @@ public class ContentParser {
     public MultiValuedMap<String, Substitution> createSubstitutionList(String html){
         MultiValuedMap<String, Substitution> map = new ArrayListValuedHashMap<>();
         Document document = Jsoup.parse(html);
+        dates.clear();
 
         Elements tableBody = document.getElementById(ID_TABLE).getElementsByTag("tbody");
         if(tableBody != null && tableBody.first() != null){
 
             for(Element current : tableBody.first().children()){
-                // create substituion object
+                // create substitution object
                 Substitution substitution = new Substitution();
                 substitution.setKlassen(getValue(current, "Klasse(n)"));
                 substitution.setDatum(getValue(current, "Datum"));
@@ -40,8 +47,9 @@ public class ContentParser {
                 substitution.setBemerkung(getValue(current, "Bemerkung"));
                 substitution.setVerlegtVon(getValue(current, "verlegt&nbsp;von"));
 
-                // add to multi-map
+                // add
                 map.put(substitution.getKlassen().trim(), substitution);
+                dates.add(new Date(substitution.getDatum()));
             }
         } else {
             //TODO show some errormessage
@@ -70,5 +78,9 @@ public class ContentParser {
                 System.out.println("- " + substitution);
             }
         }
+    }
+
+    public SortedSet<Date> getDates() {
+        return dates;
     }
 }

@@ -1,10 +1,8 @@
 package com.esgsubstitutionplanapp;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,8 +10,6 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
-import androidx.annotation.RequiresApi;
 
 import com.esgsubstitutionplanapp.content.MyClass;
 
@@ -76,45 +72,26 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
             letter = "-";
         }
 
-        SharedPreferences.Editor editor = getSharedPreferences("userdata", MODE_PRIVATE).edit();
-        editor.putString("user", user);
-        editor.putString("password", password);
-        editor.putString("grade", grade);
-        editor.putString("letter", letter);
-        editor.apply();
-
-        System.out.println("SettingsActivity - " + user);
-        System.out.println("SettingsActivity - " + password);
-        System.out.println("SettingsActivity - " + grade);
-        System.out.println("SettingsActivity - " + letter);
-        DB.username = user;
-        DB.password = password;
-        DB.myClass = new MyClass(grade, letter);
-
+        DB.saveUserData(user, password, new MyClass(grade, letter));
         Toast.makeText(this, "Einstellungen wurden gespeichert", Toast.LENGTH_SHORT).show();
     }
 
     private boolean validate(String user, String password){
         boolean validData = true;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            GradientDrawable gd = new GradientDrawable();
-            gd.setCornerRadius(5);
-            gd.setStroke(1, Color.RED);
-            if(user.isEmpty()){
-                usernameField.setBackground(gd);
-                validData = false;
-            } else {
-                usernameField.setBackgroundResource(0);
-            }
-            if(password.isEmpty()){
-                passwordField.setBackground(gd);
-                validData = false;
-            } else {
-                passwordField.setBackgroundResource(0);
-            }
-        } else if(user.isEmpty() || password.isEmpty()){
-            Toast.makeText(this, "Fehlende Angaben", Toast.LENGTH_SHORT).show();
+        GradientDrawable gd = new GradientDrawable();
+        gd.setCornerRadius(5);
+        gd.setStroke(1, Color.RED);
+        if(user.isEmpty()){
+            usernameField.setBackground(gd);
             validData = false;
+        } else {
+            usernameField.setBackgroundResource(0);
+        }
+        if(password.isEmpty()){
+            passwordField.setBackground(gd);
+            validData = false;
+        } else {
+            passwordField.setBackgroundResource(0);
         }
         return validData;
     }
