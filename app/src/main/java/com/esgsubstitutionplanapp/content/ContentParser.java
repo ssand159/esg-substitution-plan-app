@@ -1,5 +1,8 @@
 package com.esgsubstitutionplanapp.content;
 
+import com.esgsubstitutionplanapp.content.model.Date;
+import com.esgsubstitutionplanapp.content.model.Substitution;
+
 import org.apache.commons.collections4.MultiValuedMap;
 import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.jsoup.Jsoup;
@@ -7,24 +10,16 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class ContentParser {
 
     private static final String ID_TABLE = "schuelerVertretungsplan";
-    private final SortedSet<Date> dates = new TreeSet<>();
-    private final boolean logOutput;
+    private static final SortedSet<Date> dates = new TreeSet<>();
 
-    public ContentParser (boolean logOutput){
-        this.logOutput = logOutput;
-    }
-
-    public MultiValuedMap<String, Substitution> createSubstitutionList(String html){
+    public static MultiValuedMap<String, Substitution> createSubstitutionList(String html){
         MultiValuedMap<String, Substitution> map = new ArrayListValuedHashMap<>();
         Document document = Jsoup.parse(html);
         dates.clear();
@@ -55,13 +50,11 @@ public class ContentParser {
             //TODO show some errormessage
         }
 
-        if(logOutput){
-            logMap(map);
-        }
+        logMap(map);
         return map;
     }
 
-    private String getValue(Element current, String key){
+    private static String getValue(Element current, String key){
         for(Element cell : current.children()){
             if(cell.attr("data-layer").trim().equalsIgnoreCase(key)){
                 return cell.text().trim();
@@ -70,7 +63,7 @@ public class ContentParser {
         return "";
     }
 
-    private void logMap(MultiValuedMap<String, Substitution> map){
+    private static void logMap(MultiValuedMap<String, Substitution> map){
         for(String key : map.keySet()){
             System.out.println("Key: " + key);
             Collection<Substitution> substitutions = map.get(key);
@@ -80,7 +73,7 @@ public class ContentParser {
         }
     }
 
-    public SortedSet<Date> getDates() {
+    public static SortedSet<Date> getDates() {
         return dates;
     }
 }

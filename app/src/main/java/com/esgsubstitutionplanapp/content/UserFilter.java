@@ -1,18 +1,14 @@
 package com.esgsubstitutionplanapp.content;
 
+import com.esgsubstitutionplanapp.content.model.Substitution;
+
 import org.apache.commons.collections4.MultiValuedMap;
 
 import java.util.ArrayList;
 
 public class UserFilter {
 
-    private final boolean logOutput;
-
-    public UserFilter(boolean logOutput){
-        this.logOutput = logOutput;
-    }
-
-    public ArrayList<Substitution> getSubstitutionsForMyClass(MultiValuedMap<String, Substitution> map, MyClass myClass){
+    public static ArrayList<Substitution> getSubstitutionsForMyClass(MultiValuedMap<String, Substitution> map, MyClass myClass){
         ArrayList<Substitution> mySubstitutions = new ArrayList<>();
 
         for(String key : map.keySet()){
@@ -21,17 +17,15 @@ public class UserFilter {
             }
         }
 
-        if(logOutput){
-            StringBuilder stringBuilder = new StringBuilder("Substitutions for ").append(myClass.getFullName()).append("\n");
-            for(Substitution substitution : mySubstitutions){
-                stringBuilder.append("- ").append(substitution).append("\n");
-            }
-            System.out.println(stringBuilder.toString());
-        }
+//        StringBuilder stringBuilder = new StringBuilder("Substitutions for ").append(myClass.getFullName()).append("\n");
+//        for(Substitution substitution : mySubstitutions){
+//            stringBuilder.append("- ").append(substitution).append("\n");
+//        }
+//        System.out.println(stringBuilder.toString());
         return mySubstitutions;
     }
 
-    private boolean keyMatchesClass(String key, MyClass myClass){
+    private static boolean keyMatchesClass(String key, MyClass myClass){
         if(key.contains(myClass.getFullName())){
             // matches grade and letter
             // example key: "05B", "10E" or "12"

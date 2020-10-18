@@ -23,7 +23,7 @@ public class MainActivity extends Activity {
 
     // views
     private LinearLayout datePicker;
-    private ScrollView contentView;
+    private LinearLayout contentView;
     private TextView myclassText;
     private TextView allclassesText;
 

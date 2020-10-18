@@ -3,6 +3,7 @@ package com.esgsubstitutionplanapp;
 import android.content.SharedPreferences;
 
 import com.esgsubstitutionplanapp.content.MyClass;
+import com.esgsubstitutionplanapp.content.model.Content;
 
 public class DB {
 
@@ -16,6 +17,8 @@ public class DB {
     public static long lastUpdate = 0;
 
     public static final long fiveMinutesInMillis = 300_000L;
+
+    public static Content content;
 
     private static SharedPreferences preferences;
 
