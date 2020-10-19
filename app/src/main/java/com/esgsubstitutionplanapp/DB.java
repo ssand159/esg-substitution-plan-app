@@ -25,16 +25,20 @@ public class DB {
     // general settings
     public static boolean wasStartedBefore;
     public static long lastUpdate = 0;
+    public static boolean classChanged = false;
 
     // content
     public static SortedSet<Date> dates;
     public static ArrayList<Substitution> mySubstitutions;
     public static ArrayList<Substitution> allSubstitutions;
+    public static ArrayList<Substitution> pauses;
 
     public static void saveUserData(String username, String password, MyClass myClass){
         DB.username = username;
         DB.password = password;
         DB.myClass = myClass;
+
+        DB.classChanged = true;
 
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString("user", username);

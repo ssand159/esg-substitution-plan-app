@@ -25,10 +25,10 @@ public class MainActivity extends Activity {
     private LinearLayout contentView;
     private TextView myclassText;
     private TextView allclassesText;
+    private TextView pauseText;
 
     // active values
     private String activeDate;
-    private TextView activeClass;
 
     // other fields
     private boolean doubleBackToExitPressedOnce = false;
@@ -43,6 +43,7 @@ public class MainActivity extends Activity {
         contentView = findViewById(R.id.contentView);
         myclassText = findViewById(R.id.myclassText);
         allclassesText = findViewById(R.id.allclassesText);
+        pauseText = findViewById(R.id.pauseText);
 
         // setup
         DB.setup(getSharedPreferences("userdata", MODE_PRIVATE));
@@ -66,7 +67,8 @@ public class MainActivity extends Activity {
                 try {
                     myclassText.setText(DB.myClass.getFullName());
                     contentManager.loadContent();
-                    contentManager.paintDateViews(this, datePicker);
+                    activeDate = contentManager.paintDateViews(this, datePicker);
+                    contentManager.paintContent(this, contentView, DB.mySubstitutions, activeDate);
                 } catch (Exception e){
                     // TODO
                 }
@@ -74,6 +76,11 @@ public class MainActivity extends Activity {
         } else {
             // show welcome screen
             startWelcome(null);
+        }
+
+        if(DB.classChanged){
+            DB.classChanged = false;
+            myClassClicked(null);
         }
     }
 
@@ -91,11 +98,10 @@ public class MainActivity extends Activity {
     }
 
     public void myClassClicked(View view){
-        activeClass = myclassText;
-
         // update frontend
         myclassText.setBackgroundColor(getResources().getColor(R.color.activeSelector));
         allclassesText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
+        pauseText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
 
         // update content
         try {
@@ -106,15 +112,28 @@ public class MainActivity extends Activity {
     }
 
     public void allClassesClicked(View view){
-        activeClass = allclassesText;
-
         // update frontend
         myclassText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
         allclassesText.setBackgroundColor(getResources().getColor(R.color.activeSelector));
+        pauseText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
 
         // update content
         try {
             contentManager.paintContent(this, contentView, DB.allSubstitutions, activeDate);
+        } catch (Exception e) {
+            //Todo
+        }
+    }
+
+    public void pauseClicked(View view){
+        // update frontend
+        myclassText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
+        allclassesText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
+        pauseText.setBackgroundColor(getResources().getColor(R.color.activeSelector));
+
+        // update content
+        try {
+            contentManager.paintContent(this, contentView, DB.pauses, activeDate);
         } catch (Exception e) {
             //Todo
         }

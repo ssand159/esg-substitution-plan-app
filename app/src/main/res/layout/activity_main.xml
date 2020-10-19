@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="2"
+        android:weightSum="3"
         >
         <TextView
             android:id="@+id/myclassText"
@@ -81,6 +81,21 @@
             android:textSize="@dimen/selector_textsize"
             android:layout_marginBottom="10dp"
             android:text="@string/buttonAllClasses"
+            android:layout_weight="1"
+            android:background="@color/inActiveSelector"/>
+        <TextView
+            android:id="@+id/pauseText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="pauseClicked"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:textSize="@dimen/selector_textsize"
+            android:layout_marginBottom="10dp"
+            android:text="@string/buttonPause"
             android:layout_weight="1"
             android:background="@color/inActiveSelector"/>
     </LinearLayout>

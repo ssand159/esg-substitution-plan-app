@@ -46,15 +46,16 @@ public class ContentManager {
 
         // set all view
         addText(custom, R.id.template_row_klassen, R.id.template_klassen, substitution.getKlassen());
-        addText(custom, R.id.template_row_art, R.id.template_art, substitution.getKlassen());
-        addText(custom, R.id.template_row_bemerkung, R.id.template_bemerkung, substitution.getKlassen());
-        addText(custom, R.id.template_row_datum, R.id.template_datum, substitution.getKlassen());
-        addText(custom, R.id.template_row_fach, R.id.template_fach, substitution.getKlassen());
-        addText(custom, R.id.template_row_fach2, R.id.template_fach2, substitution.getKlassen());
-        addText(custom, R.id.template_row_std, R.id.template_std, substitution.getKlassen());
-        addText(custom, R.id.template_row_verlegtvon, R.id.template_verlegtvon, substitution.getKlassen());
-        addText(custom, R.id.template_row_vertretung, R.id.template_vertretung, substitution.getKlassen());
-        addText(custom, R.id.template_row_zuvertreten, R.id.template_zuvertreten, substitution.getKlassen());
+        addText(custom, R.id.template_row_art, R.id.template_art, substitution.getArt());
+        addText(custom, R.id.template_row_bemerkung, R.id.template_bemerkung, substitution.getBemerkung());
+        addText(custom, R.id.template_row_datum, R.id.template_datum, substitution.getDatum());
+        addText(custom, R.id.template_row_fach, R.id.template_fach, substitution.getFach());
+        addText(custom, R.id.template_row_fach2, R.id.template_fach2, substitution.getFach2());
+        addText(custom, R.id.template_row_std, R.id.template_std, substitution.getStd());
+        addText(custom, R.id.template_row_verlegtvon, R.id.template_verlegtvon, substitution.getVerlegtVon());
+        addText(custom, R.id.template_row_vertretung, R.id.template_vertretung, substitution.getVertretung());
+        addText(custom, R.id.template_row_zuvertreten, R.id.template_zuvertreten, substitution.getZuVertreten());
+        addText(custom, R.id.template_row_raum, R.id.template_raum, substitution.getRaum());
     }
 
     private void addText(View custom, int tableRowId, int textViewId, String text){
@@ -67,9 +68,10 @@ public class ContentManager {
         }
     }
 
-    public void paintDateViews(MainActivity mainActivity, LinearLayout datePicker){
+    public String paintDateViews(MainActivity mainActivity, LinearLayout datePicker){
         datePicker.removeAllViews();
         boolean first = true;
+        String firstDate = null;
         datePicker.setWeightSum(DB.dates.size());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.weight = 1.0f;
@@ -85,11 +87,13 @@ public class ContentManager {
             if(first){
                 dateView.setBackgroundColor(mainActivity.getResources().getColor(R.color.activeSelector));
                 first = false;
+                firstDate = date.getDate();
             } else {
                 dateView.setBackgroundColor(mainActivity.getResources().getColor(R.color.inActiveSelector));
             }
             datePicker.addView(dateView);
         }
+        return firstDate;
     }
 
 

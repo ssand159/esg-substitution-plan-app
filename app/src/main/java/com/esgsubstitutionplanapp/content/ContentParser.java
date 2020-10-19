@@ -26,6 +26,7 @@ public class ContentParser {
     public static void createSubstitutionList(String html){
         SortedSet<Date> dates = new TreeSet<>();
         ArrayList<Substitution> substitutions = new ArrayList<>();
+        ArrayList<Substitution> pauses = new ArrayList<>();
 
         Document document = Jsoup.parse(html);
         Elements tableBody = document.getElementById(ID_TABLE).getElementsByTag("tbody");
@@ -48,7 +49,12 @@ public class ContentParser {
                 substitution.setVerlegtVon(getValue(current, "verlegt&nbsp;von"));
 
                 // add
-                substitutions.add(substitution);
+                if(substitution.getArt().toLowerCase().contains("pausenaufsicht")){
+                    substitution.setArt(null);
+                    pauses.add(substitution);
+                } else {
+                    substitutions.add(substitution);
+                }
                 dates.add(new Date(substitution.getDatum()));
             }
         } else {
@@ -58,6 +64,7 @@ public class ContentParser {
         Collections.sort(substitutions);
         DB.dates = dates;
         DB.allSubstitutions = substitutions;
+        DB.pauses = pauses;
     }
 
     public static void filterSubstitutionsForMyClass(){
@@ -99,7 +106,7 @@ public class ContentParser {
     private static String getValue(Element current, String key){
         for(Element cell : current.children()){
             if(cell.attr("data-layer").trim().equalsIgnoreCase(key)){
-                return cell.text().trim();
+                return cell.text().trim().replace("-","");
             }
         }
         return null;
