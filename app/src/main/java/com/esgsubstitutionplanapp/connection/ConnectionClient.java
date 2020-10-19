@@ -16,6 +16,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class ConnectionClient {
 
@@ -66,7 +67,10 @@ public class ConnectionClient {
         }
         sessionCookieValue = stringBuilder.toString();
 
-        String html = response.body().string();
+        ResponseBody responseBody = response.body();
+        String html = responseBody.string();
+        responseBody.close();
+
         Document document = Jsoup.parse(html);
         Element form = document.getElementById(ID_FORM);
         for(Element element : form.child(0).children()){
@@ -159,12 +163,14 @@ public class ConnectionClient {
                 .addHeader("cache-control", "max-age=0")
                 .build();
         Response response = client.newCall(request).execute();
-        String body = response.body().string();
+        ResponseBody responseBody = response.body();
+        String html = responseBody.string();
+        responseBody.close();
         if (logOutput) {
             System.out.println("StatusCode: " + response.code());
             System.out.println("Headers: " + response.headers());
-            System.out.println("Html: " + body.length());
+            System.out.println("Html: " + html.length());
         }
-        return body;
+        return html;
     }
 }
