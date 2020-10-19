@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.esgsubstitutionplanapp.content.ContentManager;
+import com.esgsubstitutionplanapp.content.ContentParser;
 import com.esgsubstitutionplanapp.content.MyClass;
 
 public class SettingsActivity extends Activity implements AdapterView.OnItemSelectedListener {
@@ -75,8 +75,7 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
 
         // sava data & update content
         DB.saveUserData(user, password, new MyClass(grade, letter));
-        ContentManager contentManager = new ContentManager();
-        contentManager.updateUserFilter();
+        ContentParser.filterSubstitutionsForMyClass();
 
         Toast.makeText(this, "Einstellungen wurden gespeichert", Toast.LENGTH_SHORT).show();
     }

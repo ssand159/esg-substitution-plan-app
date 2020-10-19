@@ -3,24 +3,33 @@ package com.esgsubstitutionplanapp;
 import android.content.SharedPreferences;
 
 import com.esgsubstitutionplanapp.content.MyClass;
-import com.esgsubstitutionplanapp.content.model.Content;
+import com.esgsubstitutionplanapp.content.model.Date;
+import com.esgsubstitutionplanapp.content.model.Substitution;
+
+import java.util.ArrayList;
+import java.util.SortedSet;
 
 public class DB {
 
-    public static final String endpoint = "https://www.esg-landau.de/unterstuetzung/informationen/vertretungsplan";
+    private static SharedPreferences preferences;
 
+    // static fields
+    public static final String endpoint = "https://www.esg-landau.de/unterstuetzung/informationen/vertretungsplan";
+    public static final long fiveMinutesInMillis = 300_000L;
+
+    // user settings
     public static String username;
     public static String password;
     public static MyClass myClass;
 
+    // general settings
     public static boolean wasStartedBefore;
     public static long lastUpdate = 0;
 
-    public static final long fiveMinutesInMillis = 300_000L;
-
-    public static Content content;
-
-    private static SharedPreferences preferences;
+    // content
+    public static SortedSet<Date> dates;
+    public static ArrayList<Substitution> mySubstitutions;
+    public static ArrayList<Substitution> allSubstitutions;
 
     public static void saveUserData(String username, String password, MyClass myClass){
         DB.username = username;

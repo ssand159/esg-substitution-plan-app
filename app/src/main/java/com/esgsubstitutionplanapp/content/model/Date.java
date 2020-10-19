@@ -1,6 +1,6 @@
 package com.esgsubstitutionplanapp.content.model;
 
-public class Date implements Comparable{
+public class Date implements Comparable<Date>{
     private String date;
 
     public Date(String date){
@@ -16,7 +16,7 @@ public class Date implements Comparable{
     }
 
     @Override
-    public int compareTo(Object o) {
+    public int compareTo(Date other) {
         //TODO
         return 0;
     }

@@ -1,5 +1,8 @@
 package com.esgsubstitutionplanapp.content;
 
+import androidx.recyclerview.widget.SortedList;
+
+import com.esgsubstitutionplanapp.DB;
 import com.esgsubstitutionplanapp.content.model.Date;
 import com.esgsubstitutionplanapp.content.model.Substitution;
 
@@ -10,21 +13,23 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 public class ContentParser {
 
     private static final String ID_TABLE = "schuelerVertretungsplan";
-    private static final SortedSet<Date> dates = new TreeSet<>();
 
-    public static MultiValuedMap<String, Substitution> createSubstitutionList(String html){
-        MultiValuedMap<String, Substitution> map = new ArrayListValuedHashMap<>();
+    public static void createSubstitutionList(String html){
+        SortedSet<Date> dates = new TreeSet<>();
+        ArrayList<Substitution> substitutions = new ArrayList<>();
+
         Document document = Jsoup.parse(html);
-        dates.clear();
-
         Elements tableBody = document.getElementById(ID_TABLE).getElementsByTag("tbody");
+
         if(tableBody != null && tableBody.first() != null){
 
             for(Element current : tableBody.first().children()){
@@ -43,15 +48,52 @@ public class ContentParser {
                 substitution.setVerlegtVon(getValue(current, "verlegt&nbsp;von"));
 
                 // add
-                map.put(substitution.getKlassen().trim(), substitution);
+                substitutions.add(substitution);
                 dates.add(new Date(substitution.getDatum()));
             }
         } else {
             //TODO show some errormessage
         }
 
-        logMap(map);
-        return map;
+        Collections.sort(substitutions);
+        DB.dates = dates;
+        DB.allSubstitutions = substitutions;
+    }
+
+    public static void filterSubstitutionsForMyClass(){
+        ArrayList<Substitution> mySubstitutions = new ArrayList<>();
+        DB.mySubstitutions = mySubstitutions;
+
+        for(Substitution substitution : DB.allSubstitutions){
+            if(keyMatchesClass(substitution.getKlassen())){
+                mySubstitutions.add(substitution);
+            }
+        }
+    }
+
+    private static boolean keyMatchesClass(String klasse){
+        MyClass myClass = DB.myClass;
+        if(klasse.contains(myClass.getFullName())){
+            // matches grade and letter
+            // example key: "05B", "10E" or "12"
+            return true;
+        }
+        if(klasse.length() == 2 && klasse.contains(myClass.getGrade())){
+            // matches grade only
+            // example key: "05" or "09"
+            return klasse.equals(myClass.getGrade());
+        }
+        if(klasse.contains(",")){
+            String[] classes = klasse.split(",");
+            for(String aClass : classes){
+                if(aClass.trim().length() == 2 && aClass.trim().equals(myClass.getGrade())){
+                    // match grade if multiple grades are given
+                    // example key: "07, 08"
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     private static String getValue(Element current, String key){
@@ -60,20 +102,7 @@ public class ContentParser {
                 return cell.text().trim();
             }
         }
-        return "";
+        return null;
     }
 
-    private static void logMap(MultiValuedMap<String, Substitution> map){
-        for(String key : map.keySet()){
-            System.out.println("Key: " + key);
-            Collection<Substitution> substitutions = map.get(key);
-            for(Substitution substitution : substitutions){
-                System.out.println("- " + substitution);
-            }
-        }
-    }
-
-    public static SortedSet<Date> getDates() {
-        return dates;
-    }
 }

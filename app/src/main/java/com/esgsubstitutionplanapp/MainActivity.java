@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,7 +65,8 @@ public class MainActivity extends Activity {
                 // everything looks fine, update content
                 try {
                     myclassText.setText(DB.myClass.getFullName());
-                    contentManager.showContent(this, datePicker, contentView, myclassText, null);
+                    contentManager.loadContent();
+                    contentManager.paintDateViews(this, datePicker);
                 } catch (Exception e){
                     // TODO
                 }
@@ -87,11 +87,7 @@ public class MainActivity extends Activity {
         view.setBackgroundColor(getResources().getColor(R.color.activeSelector));
 
         // update content
-        try {
-            contentManager.showContent(this, datePicker, contentView, activeClass, activeDate);
-        } catch (Exception e) {
-            //Todo
-        }
+        myClassClicked(null);
     }
 
     public void myClassClicked(View view){
@@ -103,7 +99,7 @@ public class MainActivity extends Activity {
 
         // update content
         try {
-            contentManager.showContent(this, datePicker, contentView, activeClass, activeDate);
+            contentManager.paintContent(this, contentView, DB.mySubstitutions, activeDate);
         } catch (Exception e) {
             //Todo
         }
@@ -118,7 +114,7 @@ public class MainActivity extends Activity {
 
         // update content
         try {
-            contentManager.showContent(this, datePicker, contentView, activeClass, activeDate);
+            contentManager.paintContent(this, contentView, DB.allSubstitutions, activeDate);
         } catch (Exception e) {
             //Todo
         }
