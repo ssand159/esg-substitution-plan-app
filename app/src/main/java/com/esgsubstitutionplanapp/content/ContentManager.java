@@ -2,6 +2,7 @@ package com.esgsubstitutionplanapp.content;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -106,12 +107,13 @@ public class ContentManager {
             dateView.setText(date.getDate());
             dateView.setLayoutParams(params);
             dateView.setGravity(Gravity.CENTER_HORIZONTAL);
-            dateView.setTextSize(mainActivity.getResources().getDimension(R.dimen.selector_textsize));
+            dateView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mainActivity.getResources().getDimension(R.dimen.selector_textsize));
             dateView.setClickable(true);
             dateView.setFocusable(true);
             dateView.setOnClickListener(v -> mainActivity.dateClicked(dateView, date.getDate()));
             if(first){
                 dateView.setBackgroundColor(mainActivity.getResources().getColor(R.color.activeSelector));
+                dateView.setTextColor(mainActivity.getResources().getColor(R.color.activeText));
                 first = false;
                 firstDate = date.getDate();
             } else {

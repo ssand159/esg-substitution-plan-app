@@ -95,9 +95,12 @@ public class MainActivity extends Activity {
 
         // update frontend
         for(int index = 0; index < datePicker.getChildCount(); index++) {
-            datePicker.getChildAt(index).setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
+            TextView current = (TextView) datePicker.getChildAt(index);
+            current.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
+            current.setTextColor(getResources().getColor(R.color.inactiveText));
         }
         view.setBackgroundColor(getResources().getColor(R.color.activeSelector));
+        view.setTextColor(getResources().getColor(R.color.activeText));
 
         // update content
         myClassClicked(null);
@@ -106,8 +109,11 @@ public class MainActivity extends Activity {
     public void myClassClicked(View view){
         // update frontend
         myclassText.setBackgroundColor(getResources().getColor(R.color.activeSelector));
+        myclassText.setTextColor(getResources().getColor(R.color.activeText));
         allclassesText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
+        allclassesText.setTextColor(getResources().getColor(R.color.inactiveText));
         pauseText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
+        pauseText.setTextColor(getResources().getColor(R.color.inactiveText));
 
         // update content
         try {
@@ -120,8 +126,11 @@ public class MainActivity extends Activity {
     public void allClassesClicked(View view){
         // update frontend
         myclassText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
+        myclassText.setTextColor(getResources().getColor(R.color.inactiveText));
         allclassesText.setBackgroundColor(getResources().getColor(R.color.activeSelector));
+        allclassesText.setTextColor(getResources().getColor(R.color.activeText));
         pauseText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
+        pauseText.setTextColor(getResources().getColor(R.color.inactiveText));
 
         // update content
         try {
@@ -134,8 +143,11 @@ public class MainActivity extends Activity {
     public void pauseClicked(View view){
         // update frontend
         myclassText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
+        myclassText.setTextColor(getResources().getColor(R.color.inactiveText));
         allclassesText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
+        allclassesText.setTextColor(getResources().getColor(R.color.inactiveText));
         pauseText.setBackgroundColor(getResources().getColor(R.color.activeSelector));
+        pauseText.setTextColor(getResources().getColor(R.color.activeText));
 
         // update content
         try {

@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:textSize="25sp"
+        android:textSize="@dimen/headline_size"
         android:layout_margin="10dp"
         android:text="@string/title_activity_main"
         />
@@ -67,6 +67,7 @@
             android:layout_weight="1"
             android:textSize="@dimen/selector_textsize"
             android:background="@color/activeSelector"
+            android:textColor="@color/activeText"
             />
         <TextView
             android:id="@+id/allclassesText"

@@ -3,6 +3,8 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="activeSelector">#0cd</color>
-    <color name="inActiveSelector">#eee</color>
+    <color name="activeSelector">#1F8703</color>
+    <color name="inActiveSelector">#9CC88F</color>
+    <color name="activeText">#fff</color>
+    <color name="inactiveText">#000</color>
 </resources>
