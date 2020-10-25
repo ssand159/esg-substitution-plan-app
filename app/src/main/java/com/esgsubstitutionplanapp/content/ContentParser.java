@@ -1,20 +1,15 @@
 package com.esgsubstitutionplanapp.content;
 
-import androidx.recyclerview.widget.SortedList;
-
 import com.esgsubstitutionplanapp.DB;
 import com.esgsubstitutionplanapp.content.model.Date;
 import com.esgsubstitutionplanapp.content.model.Substitution;
 
-import org.apache.commons.collections4.MultiValuedMap;
-import org.apache.commons.collections4.multimap.ArrayListValuedHashMap;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
