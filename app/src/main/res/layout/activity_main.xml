@@ -101,6 +101,7 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/contentScrollView"
         android:layout_below="@+id/classPicker"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -111,5 +112,30 @@
             android:orientation="vertical" />
 
     </ScrollView>
+
+    <TextView
+        android:id="@+id/noContentView"
+        android:layout_below="@+id/classPicker"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/noContentText"
+        android:visibility="visible"
+        android:layout_margin="50dp"
+        android:textSize="20sp"
+        android:gravity="center">
+    </TextView>
+
+    <TextView
+        android:id="@+id/errorView"
+        android:layout_below="@+id/classPicker"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/errorText"
+        android:visibility="gone"
+        android:layout_margin="50dp"
+        android:textColor="#f00"
+        android:textSize="20sp"
+        android:gravity="center">
+    </TextView>
 
 </RelativeLayout>

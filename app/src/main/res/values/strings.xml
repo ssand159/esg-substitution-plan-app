@@ -7,6 +7,8 @@
     <string name="buttonSettings">Einstellungen</string>
     <string name="buttonAllClasses">Alle</string>
     <string name="buttonPause">Pause</string>
+    <string name="noContentText">Zurzeit gibt es keine Ankündigungen</string>
+    <string name="errorText">Leider gab es einen technischen Fehler. Bitte versuche es später nochmal</string>
 
     <!-- Settings activity -->
     <string name="title_activity_settings">Einstellungen</string>

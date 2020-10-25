@@ -6,6 +6,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.esgsubstitutionplanapp.DB;
@@ -20,6 +21,23 @@ import java.util.concurrent.ExecutionException;
 
 public class ContentManager {
 
+    private final MainActivity mainActivity;
+    private final LinearLayout datePicker;
+    private final LinearLayout contentView;
+    private final ScrollView contentScrollView;
+    private final TextView noContentView;
+    private final TextView errorView;
+
+    public ContentManager(MainActivity mainActivity, LinearLayout datePicker, LinearLayout contentView, TextView noContentView, ScrollView contentScrollView, TextView errorView){
+        this.mainActivity = mainActivity;
+        this.datePicker = datePicker;
+        this.contentView = contentView;
+        this.noContentView = noContentView;
+        this.contentScrollView = contentScrollView;
+        this.errorView = errorView;
+    }
+
+
     public void loadContent() throws ExecutionException, InterruptedException {
         if(DB.lastUpdate + DB.fiveMinutesInMillis < System.currentTimeMillis()){
             DB.lastUpdate = System.currentTimeMillis();
@@ -27,15 +45,23 @@ public class ContentManager {
         }
     }
 
-    public void paintContent(MainActivity mainActivity, LinearLayout contentView, ArrayList<Substitution> substitutions, String activeDate) throws ExecutionException, InterruptedException {
+    public void paintContent(ArrayList<Substitution> substitutions, String activeDate) throws ExecutionException, InterruptedException {
         loadContent();
 
         LayoutInflater inflater = (LayoutInflater) mainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         contentView.removeAllViews();
+        errorView.setVisibility(View.GONE);
 
-        for(Substitution substitution : substitutions){
-            if(substitution.getDatum().equals(activeDate)){
-                addToView(inflater, contentView, substitution);
+        if(substitutions == null || substitutions.isEmpty()){
+            noContentView.setVisibility(View.VISIBLE);
+            contentScrollView.setVisibility(View.GONE);
+        } else {
+            noContentView.setVisibility(View.GONE);
+            contentScrollView.setVisibility(View.VISIBLE);
+            for(Substitution substitution : substitutions){
+                if(substitution.getDatum().equals(activeDate)){
+                    addToView(inflater, contentView, substitution);
+                }
             }
         }
     }
@@ -68,7 +94,7 @@ public class ContentManager {
         }
     }
 
-    public String paintDateViews(MainActivity mainActivity, LinearLayout datePicker){
+    public String paintDateViews(){
         datePicker.removeAllViews();
         boolean first = true;
         String firstDate = null;
