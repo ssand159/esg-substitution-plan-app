@@ -1,8 +1,6 @@
 package com.esgsubstitutionplanapp.content;
 
 import com.esgsubstitutionplanapp.DB;
-import com.esgsubstitutionplanapp.content.model.Date;
-import com.esgsubstitutionplanapp.content.model.Substitution;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,7 +17,7 @@ public class ContentParser {
     private static final String ID_TABLE = "schuelerVertretungsplan";
 
     public static void createSubstitutionList(String html){
-        SortedSet<Date> dates = new TreeSet<>();
+        SortedSet<String> dates = new TreeSet<>();
         ArrayList<Substitution> substitutions = new ArrayList<>();
         ArrayList<Substitution> pauses = new ArrayList<>();
 
@@ -50,7 +48,7 @@ public class ContentParser {
                 } else {
                     substitutions.add(substitution);
                 }
-                dates.add(new Date(substitution.getDatum()));
+                dates.add(substitution.getDatum());
             }
         } else {
             //TODO show some errormessage

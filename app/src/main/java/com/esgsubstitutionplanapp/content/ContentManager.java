@@ -14,8 +14,6 @@ import com.esgsubstitutionplanapp.DB;
 import com.esgsubstitutionplanapp.MainActivity;
 import com.esgsubstitutionplanapp.R;
 import com.esgsubstitutionplanapp.connection.ConnectionClient;
-import com.esgsubstitutionplanapp.content.model.Date;
-import com.esgsubstitutionplanapp.content.model.Substitution;
 
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
@@ -102,20 +100,20 @@ public class ContentManager {
         datePicker.setWeightSum(DB.dates.size());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.weight = 1.0f;
-        for(Date date : DB.dates){
+        for(String date : DB.dates){
             TextView dateView = new TextView(mainActivity);
-            dateView.setText(date.getDate());
+            dateView.setText(date);
             dateView.setLayoutParams(params);
             dateView.setGravity(Gravity.CENTER_HORIZONTAL);
             dateView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mainActivity.getResources().getDimension(R.dimen.selector_textsize));
             dateView.setClickable(true);
             dateView.setFocusable(true);
-            dateView.setOnClickListener(v -> mainActivity.dateClicked(dateView, date.getDate()));
+            dateView.setOnClickListener(v -> mainActivity.dateClicked(dateView, date));
             if(first){
                 dateView.setBackgroundColor(mainActivity.getResources().getColor(R.color.activeSelector));
                 dateView.setTextColor(mainActivity.getResources().getColor(R.color.activeText));
                 first = false;
-                firstDate = date.getDate();
+                firstDate = date;
             } else {
                 dateView.setBackgroundColor(mainActivity.getResources().getColor(R.color.inActiveSelector));
             }

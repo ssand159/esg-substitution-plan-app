@@ -1,4 +1,4 @@
-package com.esgsubstitutionplanapp.content.model;
+package com.esgsubstitutionplanapp.content;
 
 import org.jetbrains.annotations.NotNull;
 
