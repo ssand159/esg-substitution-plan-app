@@ -26,14 +26,16 @@ public class ContentManager {
     private final ScrollView contentScrollView;
     private final TextView noContentView;
     private final TextView errorView;
+    private final TextView newsofthedayText;
 
-    public ContentManager(MainActivity mainActivity, LinearLayout datePicker, LinearLayout contentView, TextView noContentView, ScrollView contentScrollView, TextView errorView){
+    public ContentManager(MainActivity mainActivity, LinearLayout datePicker, LinearLayout contentView, TextView noContentView, ScrollView contentScrollView, TextView errorView, TextView newsofthedayText){
         this.mainActivity = mainActivity;
         this.datePicker = datePicker;
         this.contentView = contentView;
         this.noContentView = noContentView;
         this.contentScrollView = contentScrollView;
         this.errorView = errorView;
+        this.newsofthedayText = newsofthedayText;
     }
 
 
@@ -63,6 +65,18 @@ public class ContentManager {
                 }
             }
         }
+
+        // update news
+        for(NewsOfTheDay newsOfTheDay : DB.newsOfTheDays){
+            if(newsOfTheDay.getDate().equalsIgnoreCase(activeDate)){
+                newsofthedayText.setVisibility(View.VISIBLE);
+                newsofthedayText.setText(newsOfTheDay.getNews());
+            } else {
+                newsofthedayText.setVisibility(View.GONE);
+            }
+        }
+
+
     }
 
     private void addToView(LayoutInflater inflater, LinearLayout scrollView, Substitution substitution){
@@ -133,7 +147,7 @@ public class ContentManager {
                 String html = connectionClient.getHtml();
 
                 // parse content and filter it according to user settings
-                ContentParser.createSubstitutionList(html);
+                ContentParser.parseContent(html);
                 ContentParser.filterSubstitutionsForMyClass();
 
             } catch (Exception e){

@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 
 import com.esgsubstitutionplanapp.content.ContentManager;
+import com.esgsubstitutionplanapp.content.NewsOfTheDay;
 import com.esgsubstitutionplanapp.ignorepackage.TestData;
 
 public class MainActivity extends Activity {
@@ -29,6 +30,7 @@ public class MainActivity extends Activity {
     private TextView allclassesText;
     private TextView pauseText;
     private TextView errorText;
+    private TextView newsofthedayText;
 
     // active values
     private String activeDate;
@@ -49,11 +51,12 @@ public class MainActivity extends Activity {
         allclassesText = findViewById(R.id.allclassesText);
         pauseText = findViewById(R.id.pauseText);
         errorText = findViewById(R.id.errorView);
+        newsofthedayText = findViewById(R.id.newsoftheday);
 
         // setup
         DB.setup(getSharedPreferences("userdata", MODE_PRIVATE));
         ScrollView contentScrollView = findViewById(R.id.contentScrollView);
-        contentManager = new ContentManager(this, datePicker, contentView, noContentView, contentScrollView, errorText);
+        contentManager = new ContentManager(this, datePicker, contentView, noContentView, contentScrollView, errorText, newsofthedayText);
 
         // set up test data
         TestData.setUpTestData();

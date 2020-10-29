@@ -15,14 +15,17 @@ import java.util.TreeSet;
 public class ContentParser {
 
     private static final String ID_TABLE = "schuelerVertretungsplan";
+    private static final String DAILY_NEWS = "nachrichtDesTages";
 
-    public static void createSubstitutionList(String html){
+    public static void parseContent(String html){
         SortedSet<String> dates = new TreeSet<>();
         ArrayList<Substitution> substitutions = new ArrayList<>();
         ArrayList<Substitution> pauses = new ArrayList<>();
+        ArrayList<NewsOfTheDay> newsOfTheDays = new ArrayList<>();
 
         Document document = Jsoup.parse(html);
         Elements tableBody = document.getElementById(ID_TABLE).getElementsByTag("tbody");
+        Elements dailyNewsTable = document.getElementById(DAILY_NEWS).getElementsByTag("tbody");
 
         if(tableBody != null && tableBody.first() != null){
 
@@ -54,10 +57,22 @@ public class ContentParser {
             //TODO show some errormessage
         }
 
+        if(dailyNewsTable != null && dailyNewsTable.first() != null){
+            for(Element current : dailyNewsTable.first().children()){
+                String date = current.child(0).html();
+                String news = current.child(1).html().replace("<br>", "\n");
+                NewsOfTheDay newsOfTheDay = new NewsOfTheDay(date, news);
+                newsOfTheDays.add(newsOfTheDay);
+            }
+        } else {
+            //TODO show some errormessage
+        }
+
         Collections.sort(substitutions);
         DB.dates = dates;
         DB.allSubstitutions = substitutions;
         DB.pauses = pauses;
+        DB.newsOfTheDays = newsOfTheDays;
     }
 
     public static void filterSubstitutionsForMyClass(){

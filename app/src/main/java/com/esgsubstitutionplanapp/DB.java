@@ -3,6 +3,7 @@ package com.esgsubstitutionplanapp;
 import android.content.SharedPreferences;
 
 import com.esgsubstitutionplanapp.content.MyClass;
+import com.esgsubstitutionplanapp.content.NewsOfTheDay;
 import com.esgsubstitutionplanapp.content.Substitution;
 
 import java.util.ArrayList;
@@ -31,6 +32,7 @@ public class DB {
     public static ArrayList<Substitution> mySubstitutions;
     public static ArrayList<Substitution> allSubstitutions;
     public static ArrayList<Substitution> pauses;
+    public static ArrayList<NewsOfTheDay> newsOfTheDays;
 
     public static void saveUserData(String username, String password, MyClass myClass){
         DB.username = username;

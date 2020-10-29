@@ -101,9 +101,20 @@
             android:background="@color/inActiveSelector"/>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/newsoftheday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/classPicker"
+        android:background="#f7af3b"
+        android:gravity="start"
+        android:padding="5dp"
+        android:textSize="20sp"
+        />
+
     <ScrollView
         android:id="@+id/contentScrollView"
-        android:layout_below="@+id/classPicker"
+        android:layout_below="@+id/newsoftheday"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
