@@ -1,4 +1,4 @@
-package com.esgsubstitutionplanapp.content;
+package com.esgsubstitutionplanapp.content.model;
 
 public class NewsOfTheDay {
     String date;

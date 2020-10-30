@@ -1,8 +1,8 @@
-package com.esgsubstitutionplanapp.content;
+package com.esgsubstitutionplanapp.content.model;
 
 import org.jetbrains.annotations.NotNull;
 
-public class Substitution implements Comparable<Substitution>{
+public class Substitution {
 
     private String klassen;
     private String datum;
@@ -15,12 +15,6 @@ public class Substitution implements Comparable<Substitution>{
     private String zuVertreten;
     private String bemerkung;
     private String verlegtVon;
-
-    @Override
-    public int compareTo(Substitution other) {
-        // TODO
-        return 0;
-    }
 
     @NotNull
     @Override

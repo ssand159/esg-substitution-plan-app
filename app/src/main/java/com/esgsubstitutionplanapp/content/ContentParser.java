@@ -1,6 +1,9 @@
 package com.esgsubstitutionplanapp.content;
 
 import com.esgsubstitutionplanapp.DB;
+import com.esgsubstitutionplanapp.content.model.Date;
+import com.esgsubstitutionplanapp.content.model.NewsOfTheDay;
+import com.esgsubstitutionplanapp.content.model.Substitution;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -18,7 +21,7 @@ public class ContentParser {
     private static final String DAILY_NEWS = "nachrichtDesTages";
 
     public static void parseContent(String html){
-        SortedSet<String> dates = new TreeSet<>();
+        SortedSet<Date> dates = new TreeSet<>();
         ArrayList<Substitution> substitutions = new ArrayList<>();
         ArrayList<Substitution> pauses = new ArrayList<>();
         ArrayList<NewsOfTheDay> newsOfTheDays = new ArrayList<>();
@@ -51,7 +54,7 @@ public class ContentParser {
                 } else {
                     substitutions.add(substitution);
                 }
-                dates.add(substitution.getDatum());
+                dates.add(new Date(substitution.getDatum()));
             }
         } else {
             //TODO show some errormessage
@@ -68,7 +71,6 @@ public class ContentParser {
             //TODO show some errormessage
         }
 
-        Collections.sort(substitutions);
         DB.dates = dates;
         DB.allSubstitutions = substitutions;
         DB.pauses = pauses;

@@ -3,8 +3,9 @@ package com.esgsubstitutionplanapp;
 import android.content.SharedPreferences;
 
 import com.esgsubstitutionplanapp.content.MyClass;
-import com.esgsubstitutionplanapp.content.NewsOfTheDay;
-import com.esgsubstitutionplanapp.content.Substitution;
+import com.esgsubstitutionplanapp.content.model.Date;
+import com.esgsubstitutionplanapp.content.model.NewsOfTheDay;
+import com.esgsubstitutionplanapp.content.model.Substitution;
 
 import java.util.ArrayList;
 import java.util.SortedSet;
@@ -28,7 +29,7 @@ public class DB {
     public static boolean classChanged = false;
 
     // content
-    public static SortedSet<String> dates;
+    public static SortedSet<Date> dates;
     public static ArrayList<Substitution> mySubstitutions;
     public static ArrayList<Substitution> allSubstitutions;
     public static ArrayList<Substitution> pauses;
