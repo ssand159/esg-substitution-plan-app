@@ -43,8 +43,8 @@ public class ContentManager {
 
 
     public void loadContent() throws ExecutionException, InterruptedException {
-        if(DB.lastUpdate + DB.fiveMinutesInMillis < System.currentTimeMillis()){
-            DB.lastUpdate = System.currentTimeMillis();
+        if(DB.getLastUpdate() + DB.fiveMinutesInMillis < System.currentTimeMillis()){
+            DB.setLastUpdate(System.currentTimeMillis());
             new RetrieveContentTask().execute().get();
         }
     }

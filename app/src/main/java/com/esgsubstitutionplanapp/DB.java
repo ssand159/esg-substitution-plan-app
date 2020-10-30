@@ -12,7 +12,8 @@ import java.util.SortedSet;
 
 public class DB {
 
-    private static SharedPreferences preferences;
+    private static SharedPreferences userPreferences;
+    private static SharedPreferences contentPreferences;
 
     // static fields
     public static final String endpoint = "https://www.esg-landau.de/unterstuetzung/informationen/vertretungsplan";
@@ -25,7 +26,7 @@ public class DB {
 
     // general settings
     public static boolean wasStartedBefore;
-    public static long lastUpdate = 0;
+    private static long lastUpdate = 0;
     public static boolean classChanged = false;
 
     // content
@@ -42,7 +43,7 @@ public class DB {
 
         DB.classChanged = true;
 
-        SharedPreferences.Editor editor = preferences.edit();
+        SharedPreferences.Editor editor = userPreferences.edit();
         editor.putString("user", username);
         editor.putString("password", password);
         editor.putString("grade", myClass.getGrade());
@@ -50,16 +51,28 @@ public class DB {
         editor.apply();
     }
 
-    public static void setup(SharedPreferences preferences){
-        DB.preferences = preferences;
-        String username = preferences.getString("user", "");
-        String password = preferences.getString("password", "");
-        String grade = preferences.getString("grade", "05");
-        String letter = preferences.getString("letter", "-");
-        DB.username = username;
-        DB.password = password;
+    public static void setup(SharedPreferences userPreferences, SharedPreferences dataPreferences){
+        // user
+        DB.userPreferences = userPreferences;
+        String grade = userPreferences.getString("grade", "05");
+        String letter = userPreferences.getString("letter", "-");
+        DB.username = userPreferences.getString("user", "");
+        DB.password = userPreferences.getString("password", "");
         DB.myClass = new MyClass(grade, letter);
-        DB.lastUpdate = System.currentTimeMillis() - fiveMinutesInMillis - 1000;
+
+        // content
+        DB.contentPreferences = dataPreferences;
+        DB.lastUpdate = dataPreferences.getLong("lastUpdate", System.currentTimeMillis() - fiveMinutesInMillis - 1000);
     }
 
+    public static void setLastUpdate(long lastUpdate) {
+        SharedPreferences.Editor editor = contentPreferences.edit();
+        editor.putLong("lastUpdate", lastUpdate);
+        editor.apply();
+        DB.lastUpdate = lastUpdate;
+    }
+
+    public static long getLastUpdate() {
+        return lastUpdate;
+    }
 }

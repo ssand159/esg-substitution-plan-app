@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
         errorText = findViewById(R.id.errorView);
 
         // setup
-        DB.setup(getSharedPreferences("userdata", MODE_PRIVATE));
+        DB.setup(getSharedPreferences("userdata", MODE_PRIVATE), getSharedPreferences("contentdata", MODE_PRIVATE));
         ScrollView contentScrollView = findViewById(R.id.contentScrollView);
         TextView newsOfTheDayText = findViewById(R.id.newsoftheday);
         contentManager = new ContentManager(this, datePicker, contentView, noContentView, contentScrollView, errorText, newsOfTheDayText);
