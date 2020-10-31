@@ -63,8 +63,13 @@ public class ContentManager {
             noContentView.setVisibility(View.GONE);
             contentScrollView.setVisibility(View.VISIBLE);
             for(Substitution substitution : substitutions){
+                boolean paintedActiveDay = false;
                 if(substitution.getDatum().equals(activeDate)){
                     addToView(inflater, contentView, substitution);
+                    paintedActiveDay = true;
+                }
+                if(!paintedActiveDay){
+                    noContentView.setVisibility(View.VISIBLE);
                 }
             }
         }
