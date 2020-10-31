@@ -3,18 +3,22 @@
     <string name="app_name">Vertretungsplan</string>
 
     <!-- main activity -->
-    <string name="title_activity_main">Vertretungsplan</string>
-    <string name="buttonSettings">Einstellungen</string>
-    <string name="buttonAllClasses">Alle</string>
-    <string name="buttonPause">Pause</string>
-    <string name="noContentText">Zurzeit gibt es keine Ankündigungen</string>
-    <string name="errorText">Leider gab es einen technischen Fehler. Bitte versuche es später nochmal</string>
+    <string name="main_activity_title">Vertretungsplan</string>
+    <string name="main_buttonSettings">Einstellungen</string>
+    <string name="main_buttonAllClasses">Alle</string>
+    <string name="main_buttonPause">Pause</string>
+    <string name="main_noContentText">Zurzeit gibt es keine Ankündigungen</string>
+    <string name="main_errorText">Leider gab es einen technischen Fehler. Bitte versuche es später nochmal</string>
 
-    <!-- Settings activity -->
-    <string name="title_activity_settings">Einstellungen</string>
-    <string name="credentialsTitle">Zugangsdaten</string>
-    <string name="gradeTitle">Mein Filter</string>
-    <string name="nutzername">Nutzername</string>
-    <string name="passwort">Passwort</string>
-    <string name="saveButton">Speichern</string>
+    <!-- settings activity -->
+    <string name="settings_activity_title">Einstellungen</string>
+    <string name="settings_credentialsTitle">Zugangsdaten</string>
+    <string name="settings_gradeTitle">Mein Filter</string>
+    <string name="settings_nutzername">Nutzername</string>
+    <string name="settings_passwort">Passwort</string>
+    <string name="settings_saveButton">Speichern</string>
+
+    <!-- welcome activity -->
+    <string name="welcome_text1">Hallo!</string>
+    <string name="welcome_text2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum!</string>
 </resources>

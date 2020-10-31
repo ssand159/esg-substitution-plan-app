@@ -7,6 +7,8 @@
     android:paddingTop="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
+    android:visibility="gone"
+    android:id="@+id/mainActivity"
     >
 
     <LinearLayout
@@ -15,15 +17,15 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         >
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:src="@drawable/ic_settings"
-        android:background="@null"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="startSettings"
-        android:contentDescription="@string/buttonSettings" />
+        <ImageButton
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/ic_settings"
+            android:background="@null"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="startSettings"
+            android:contentDescription="@string/main_buttonSettings" />
     </LinearLayout>
 
     <TextView
@@ -32,7 +34,7 @@
         android:gravity="center_horizontal"
         android:textSize="@dimen/headline_size"
         android:layout_margin="10dp"
-        android:text="@string/title_activity_main"
+        android:text="@string/main_activity_title"
         />
 
     <LinearLayout
@@ -81,7 +83,7 @@
             android:layout_marginTop="10dp"
             android:textSize="@dimen/selector_textsize"
             android:layout_marginBottom="10dp"
-            android:text="@string/buttonAllClasses"
+            android:text="@string/main_buttonAllClasses"
             android:layout_weight="1"
             android:background="@color/inActiveSelector"/>
         <TextView
@@ -96,7 +98,7 @@
             android:layout_marginTop="10dp"
             android:textSize="@dimen/selector_textsize"
             android:layout_marginBottom="10dp"
-            android:text="@string/buttonPause"
+            android:text="@string/main_buttonPause"
             android:layout_weight="1"
             android:background="@color/inActiveSelector"/>
     </LinearLayout>
@@ -131,7 +133,7 @@
         android:layout_below="@+id/classPicker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/noContentText"
+        android:text="@string/main_noContentText"
         android:visibility="visible"
         android:layout_margin="50dp"
         android:textSize="20sp"
@@ -143,7 +145,7 @@
         android:layout_below="@+id/classPicker"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/errorText"
+        android:text="@string/main_errorText"
         android:visibility="gone"
         android:layout_margin="50dp"
         android:textColor="#f00"
