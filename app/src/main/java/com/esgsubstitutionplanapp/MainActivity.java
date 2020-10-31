@@ -70,7 +70,8 @@ public class MainActivity extends Activity {
                 // check if settings are loaded correct
                 startSettings(null);
             } else {
-                // everything looks fine, update content
+                // everything looks fine, update content and show it
+                findViewById(R.id.mainActivity).setVisibility(View.VISIBLE);
                 try {
                     myclassText.setText(DB.myClass.getFullName());
                     contentManager.loadContent();
@@ -164,8 +165,8 @@ public class MainActivity extends Activity {
     }
 
     public void startWelcome(View view){
-//        Intent settings = new Intent(this, SettingsActivity.class);
-//        startActivity(settings);
+        Intent welcome = new Intent(this, WelcomeActivity.class);
+        startActivity(welcome);
     }
 
     private void showError(){

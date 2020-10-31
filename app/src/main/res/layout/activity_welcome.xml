@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WelcomeActivity"
+    android:background="#fff"
+    android:orientation="vertical"
+    android:gravity="center">
+    <TextView
+        android:id="@+id/welcomeText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_text1"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        />
+    <ImageButton
+        android:id="@+id/welcomeButton1"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_settings"
+        android:background="@null"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="clickButton1"
+        android:contentDescription="@string/main_buttonSettings" />
+    <TextView
+        android:id="@+id/welcomeText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/welcome_text2"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_margin="15dp"
+        android:visibility="gone"
+        />
+    <ImageButton
+        android:id="@+id/welcomeButton2"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/ic_settings"
+        android:background="@null"
+        android:clickable="true"
+        android:focusable="true"
+        android:onClick="clickButton2"
+        android:contentDescription="@string/main_buttonSettings"
+        android:visibility="gone"/>
+
+</LinearLayout>

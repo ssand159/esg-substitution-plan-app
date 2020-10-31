@@ -59,6 +59,7 @@ public class DB {
         DB.username = userPreferences.getString("user", "");
         DB.password = userPreferences.getString("password", "");
         DB.myClass = new MyClass(grade, letter);
+        DB.wasStartedBefore = userPreferences.getBoolean("wasStartedBefore", false);
 
         // content
         DB.contentPreferences = dataPreferences;
@@ -70,6 +71,12 @@ public class DB {
         editor.putLong("lastUpdate", lastUpdate);
         editor.apply();
         DB.lastUpdate = lastUpdate;
+    }
+
+    public static void setWasStartedBefore(boolean wasStartedBefore) {
+        SharedPreferences.Editor editor = userPreferences.edit();
+        editor.putBoolean("wasStartedBefore", wasStartedBefore);
+        editor.apply();
     }
 
     public static long getLastUpdate() {
