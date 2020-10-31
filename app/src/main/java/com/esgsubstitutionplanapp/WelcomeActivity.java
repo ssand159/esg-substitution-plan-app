@@ -14,10 +14,6 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
-        // startup
-        DB.wasStartedBefore = true;
-        DB.setLastUpdate(System.currentTimeMillis() - DB.fiveMinutesInMillis - DB.fiveMinutesInMillis);
     }
 
     public void clickButton1(View view){
@@ -30,7 +26,9 @@ public class WelcomeActivity extends Activity {
         animate(welcome2);
     }
 
-    public void clickButton2(View view){
+    public void finish(View view){
+        DB.setWasStartedBefore(true);
+        DB.setLastUpdate(System.currentTimeMillis() - DB.fiveMinutesInMillis - DB.fiveMinutesInMillis);
         finish();
     }
 
