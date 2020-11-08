@@ -5,9 +5,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:paddingTop="16dp"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:visibility="gone"
+    android:visibility="visible"
     android:id="@+id/mainActivity"
     >
 
@@ -43,16 +41,21 @@
         android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        />
 
     <LinearLayout
         android:id="@+id/classPicker"
         android:layout_below="@+id/datePicker"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="3"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
         >
         <TextView
             android:id="@+id/myclassText"
@@ -113,20 +116,69 @@
         android:padding="5dp"
         android:textSize="20sp"
         android:visibility="gone"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         />
 
-    <ScrollView
-        android:id="@+id/contentScrollView"
-        android:layout_below="@+id/newsoftheday"
+    <LinearLayout
+        android:id="@+id/contentContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@id/newsoftheday"
+        android:orientation="horizontal"
+        >
         <LinearLayout
-            android:id="@+id/contentView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="10"
+            android:paddingLeft="10dp">
+            <TextView
+                android:text="Klasse"
+                style="@style/cell"/>
+            <TextView
+                android:text="Std"
+                style="@style/cell"/>
+            <TextView
+                android:text="Art"
+                style="@style/cell"/>
+            <TextView
+                android:text="Vertretung"
+                style="@style/cell"/>
+            <TextView
+                android:text="Fach"
+                style="@style/cell"/>
+            <TextView
+                android:text="Raum"
+                style="@style/cell"/>
+            <TextView
+                android:text="Fach2"
+                style="@style/cell"/>
+            <TextView
+                android:text="Zu vertreten"
+                style="@style/cell"/>
+            <TextView
+                android:text="Bemerkung"
+                style="@style/cell"/>
+            <TextView
+                android:text="Verlegt von"
+                style="@style/cell"/>
+        </LinearLayout>
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:layout_height="match_parent"
+            android:paddingLeft="16dp"
+            >
+            <LinearLayout
+                android:id="@+id/contentView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                />
 
-    </ScrollView>
+        </HorizontalScrollView>
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/noContentView"
@@ -134,7 +186,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/main_noContentText"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_margin="50dp"
         android:textSize="20sp"
         android:gravity="center">
