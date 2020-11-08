@@ -4,6 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class Substitution {
 
+    private boolean matchesMyClass;
     private String klassen;
     private String datum;
     private String std;
@@ -32,6 +33,14 @@ public class Substitution {
                 ", bemerkung='" + bemerkung + "\n" +
                 ", verlegtVon='" + verlegtVon + "\n" +
                 '}';
+    }
+
+    public void setMatchesMyClass(boolean matchesMyClass) {
+        this.matchesMyClass = matchesMyClass;
+    }
+
+    public boolean matchesMyClass() {
+        return matchesMyClass;
     }
 
     public String getKlassen() {
