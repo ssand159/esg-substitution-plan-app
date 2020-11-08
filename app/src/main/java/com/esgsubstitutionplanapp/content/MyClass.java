@@ -12,7 +12,7 @@ public class MyClass {
 
     public String getFullName(){
         String name = grade + letter;
-        return name.trim().replace("-", "");
+        return name.trim().replace("alle", "");
     }
 
     public String getGrade() {
