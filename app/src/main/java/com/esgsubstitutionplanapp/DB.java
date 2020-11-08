@@ -63,7 +63,8 @@ public class DB {
 
         // content
         DB.contentPreferences = dataPreferences;
-        DB.lastUpdate = dataPreferences.getLong("lastUpdate", System.currentTimeMillis() - fiveMinutesInMillis - 1000);
+        DB.lastUpdate = System.currentTimeMillis() - fiveMinutesInMillis - 1000;
+//        DB.lastUpdate = dataPreferences.getLong("lastUpdate", System.currentTimeMillis() - fiveMinutesInMillis - 1000);
     }
 
     public static void setLastUpdate(long lastUpdate) {
@@ -77,6 +78,7 @@ public class DB {
         SharedPreferences.Editor editor = userPreferences.edit();
         editor.putBoolean("wasStartedBefore", wasStartedBefore);
         editor.apply();
+        DB.wasStartedBefore = true;
     }
 
     public static long getLastUpdate() {
