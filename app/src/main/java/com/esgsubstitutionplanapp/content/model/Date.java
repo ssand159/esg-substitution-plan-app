@@ -7,6 +7,7 @@ public class Date implements Comparable<Date> {
 
     private final int month;
     private final int day;
+    private String newsOfTheDay;
 
     public Date(String datum){
         this.date = datum;
@@ -14,6 +15,7 @@ public class Date implements Comparable<Date> {
         String[] split = datum.split("\\.");
         this.day = Integer.parseInt(split[0]);
         this.month = Integer.parseInt(split[1]);
+
     }
 
     public String getDate() {
@@ -54,5 +56,13 @@ public class Date implements Comparable<Date> {
                 return 1;
             }
         }
+    }
+
+    public void setNewsOfTheDay(String newsOfTheDay) {
+        this.newsOfTheDay = newsOfTheDay;
+    }
+
+    public String getNewsOfTheDay() {
+        return newsOfTheDay;
     }
 }
