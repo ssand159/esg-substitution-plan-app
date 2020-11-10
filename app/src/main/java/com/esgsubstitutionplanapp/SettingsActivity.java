@@ -70,12 +70,11 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
         }
 
         if(grade.equals("11") || grade.equals("12") || grade.equals("13")){
-            letter = "-";
+            letter = "alle";
         }
 
         // sava data & update content
         DB.saveUserData(user, password, new MyClass(grade, letter));
-        ContentParser.filterSubstitutionsForMyClass();
 
         Toast.makeText(this, "Einstellungen wurden gespeichert", Toast.LENGTH_SHORT).show();
     }
