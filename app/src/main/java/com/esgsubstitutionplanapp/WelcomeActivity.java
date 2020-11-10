@@ -1,6 +1,7 @@
 package com.esgsubstitutionplanapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -14,6 +15,18 @@ public class WelcomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        DB.setPreferences(getSharedPreferences("userdata", MODE_PRIVATE), getSharedPreferences("contentdata", MODE_PRIVATE));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(DB.wasStartedBefore){
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
+            finish();
+        }
     }
 
     public void clickButton1(View view){
@@ -27,8 +40,13 @@ public class WelcomeActivity extends Activity {
     }
 
     public void finish(View view){
+        // save status
         DB.setWasStartedBefore(true);
         DB.setLastUpdate(System.currentTimeMillis() - DB.fiveMinutesInMillis - DB.fiveMinutesInMillis);
+
+        // start main
+        Intent main = new Intent(this, MainActivity.class);
+        startActivity(main);
         finish();
     }
 
