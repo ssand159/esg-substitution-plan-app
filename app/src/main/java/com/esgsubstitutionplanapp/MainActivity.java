@@ -7,13 +7,13 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import com.esgsubstitutionplanapp.content.ContentManager;
+import com.esgsubstitutionplanapp.content.model.SubstitutionType;
 import com.esgsubstitutionplanapp.ignorepackage.TestData;
 
 public class MainActivity extends Activity {
@@ -23,12 +23,12 @@ public class MainActivity extends Activity {
 
     // views
     private LinearLayout datePicker;
-    private LinearLayout contentView;
     private TextView noContentView;
     private TextView myclassText;
     private TextView allclassesText;
     private TextView pauseText;
     private TextView errorText;
+    private View contentContainer;
 
     // active values
     private String activeDate;
@@ -43,18 +43,18 @@ public class MainActivity extends Activity {
 
         // set up view fields;
         datePicker = findViewById(R.id.datePicker);
-        contentView = findViewById(R.id.contentView);
         noContentView = findViewById(R.id.noContentView);
         myclassText = findViewById(R.id.myclassText);
         allclassesText = findViewById(R.id.allclassesText);
         pauseText = findViewById(R.id.pauseText);
         errorText = findViewById(R.id.errorView);
+        contentContainer = findViewById(R.id.contentContainer);
 
         // setup
-        DB.setup(getSharedPreferences("userdata", MODE_PRIVATE), getSharedPreferences("contentdata", MODE_PRIVATE));
-        ScrollView contentScrollView = findViewById(R.id.contentScrollView);
+        DB.setup();
         TextView newsOfTheDayText = findViewById(R.id.newsoftheday);
-        contentManager = new ContentManager(this, datePicker, contentView, noContentView, contentScrollView, errorText, newsOfTheDayText);
+        LinearLayout contentView = findViewById(R.id.contentView);
+        contentManager = new ContentManager(this, datePicker, contentView, noContentView, contentContainer, errorText);
 
         // set up test data
         TestData.setUpTestData();
@@ -65,27 +65,22 @@ public class MainActivity extends Activity {
         super.onResume();
 
         // check if this is the first start
-        if(DB.wasStartedBefore){
-            if(DB.username.isEmpty() || DB.password.isEmpty()){
-                // check if settings are loaded correct
-                startSettings(null);
-            } else {
-                // everything looks fine, update content and show it
-                findViewById(R.id.mainActivity).setVisibility(View.VISIBLE);
-                try {
-                    myclassText.setText(DB.myClass.getFullName());
-                    contentManager.loadContent();
-                    activeDate = contentManager.paintDateViews();
-                    contentManager.paintContent(DB.mySubstitutions, activeDate);
-                } catch (Exception e){
-                    showError();
-                }
-            }
+        if(DB.username.isEmpty() || DB.password.isEmpty()){
+            // check if settings are loaded correct
+            startSettings(null);
         } else {
-            // show welcome screen
-            startWelcome(null);
+            // everything looks fine, update content and show it
+            findViewById(R.id.mainActivity).setVisibility(View.VISIBLE);
+            try {
+                myclassText.setText(DB.myClass.getFullName());
+                contentManager.loadContent();
+                activeDate = contentManager.paintDateViews();
+                contentManager.setUpContent();
+                myClassClicked(null);
+            } catch (Exception e){
+                showError(e);
+            }
         }
-
         if(DB.classChanged){
             DB.classChanged = false;
             myClassClicked(null);
@@ -119,9 +114,9 @@ public class MainActivity extends Activity {
 
         // update content
         try {
-            contentManager.paintContent(DB.mySubstitutions, activeDate);
+            contentManager.updateContent(SubstitutionType.SUBSTITUTION_OF_MYCLASS, activeDate);
         } catch (Exception e) {
-            showError();
+            showError(e);
         }
     }
 
@@ -136,9 +131,9 @@ public class MainActivity extends Activity {
 
         // update content
         try {
-            contentManager.paintContent(DB.allSubstitutions, activeDate);
+            contentManager.updateContent(SubstitutionType.SUBSTITUTION_ALL, activeDate);
         } catch (Exception e) {
-            showError();
+            showError(e);
         }
     }
 
@@ -153,9 +148,9 @@ public class MainActivity extends Activity {
 
         // update content
         try {
-            contentManager.paintContent(DB.pauses, activeDate);
+            contentManager.updateContent(SubstitutionType.SUBSTITUTION_PAUSE, activeDate);
         } catch (Exception e) {
-            showError();
+            showError(e);
         }
     }
 
@@ -164,13 +159,9 @@ public class MainActivity extends Activity {
         startActivity(settings);
     }
 
-    public void startWelcome(View view){
-        Intent welcome = new Intent(this, WelcomeActivity.class);
-        startActivity(welcome);
-    }
-
-    private void showError(){
-        contentView.setVisibility(View.GONE);
+    private void showError(Exception e){
+        e.printStackTrace();
+        contentContainer.setVisibility(View.GONE);
         noContentView.setVisibility(View.GONE);
         errorText.setVisibility(View.VISIBLE);
     }

@@ -31,9 +31,7 @@ public class DB {
 
     // content
     public static SortedSet<Date> dates;
-    public static ArrayList<Substitution> mySubstitutions;
     public static ArrayList<Substitution> allSubstitutions;
-    public static ArrayList<Substitution> pauses;
     public static ArrayList<NewsOfTheDay> newsOfTheDays;
 
     public static void saveUserData(String username, String password, MyClass myClass){
@@ -51,18 +49,21 @@ public class DB {
         editor.apply();
     }
 
-    public static void setup(SharedPreferences userPreferences, SharedPreferences dataPreferences){
-        // user
+    public static void setPreferences(SharedPreferences userPreferences, SharedPreferences dataPreferences){
         DB.userPreferences = userPreferences;
+        DB.contentPreferences = dataPreferences;
+        DB.wasStartedBefore = userPreferences.getBoolean("wasStartedBefore", false);
+    }
+
+    public static void setup(){
+        // user
         String grade = userPreferences.getString("grade", "05");
-        String letter = userPreferences.getString("letter", "-");
+        String letter = userPreferences.getString("letter", "alle");
         DB.username = userPreferences.getString("user", "");
         DB.password = userPreferences.getString("password", "");
         DB.myClass = new MyClass(grade, letter);
-        DB.wasStartedBefore = userPreferences.getBoolean("wasStartedBefore", false);
 
         // content
-        DB.contentPreferences = dataPreferences;
         DB.lastUpdate = System.currentTimeMillis() - fiveMinutesInMillis - 1000;
 //        DB.lastUpdate = dataPreferences.getLong("lastUpdate", System.currentTimeMillis() - fiveMinutesInMillis - 1000);
     }

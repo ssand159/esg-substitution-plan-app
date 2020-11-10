@@ -4,6 +4,7 @@ import com.esgsubstitutionplanapp.DB;
 import com.esgsubstitutionplanapp.content.model.Date;
 import com.esgsubstitutionplanapp.content.model.NewsOfTheDay;
 import com.esgsubstitutionplanapp.content.model.Substitution;
+import com.esgsubstitutionplanapp.content.model.SubstitutionType;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,7 +24,6 @@ public class ContentParser {
     public static void parseContent(String html){
         SortedSet<Date> dates = new TreeSet<>();
         ArrayList<Substitution> substitutions = new ArrayList<>();
-        ArrayList<Substitution> pauses = new ArrayList<>();
         ArrayList<NewsOfTheDay> newsOfTheDays = new ArrayList<>();
 
         Document document = Jsoup.parse(html);
@@ -50,16 +50,26 @@ public class ContentParser {
                 // add
                 if(substitution.getArt().toLowerCase().contains("pausenaufsicht")){
                     substitution.setArt(null);
-                    pauses.add(substitution);
+                    substitution.setType(SubstitutionType.SUBSTITUTION_PAUSE);
                 } else {
                     substitutions.add(substitution);
+                    // filter userclasses
+                    if(keyMatchesClass(substitution.getKlassen())){
+                        substitution.setType(SubstitutionType.SUBSTITUTION_OF_MYCLASS);
+                    } else {
+                        substitution.setType(SubstitutionType.SUBSTITUTION_ALL);
+                    }
                 }
-                dates.add(new Date(substitution.getDatum()));
+                String date = substitution.getDatum();
+                if(date != null && !date.isEmpty()){
+                    dates.add(new Date(date));
+                }
             }
         } else {
             //TODO show some errormessage
         }
 
+        // TODO add this to Date
         if(dailyNewsTable != null && dailyNewsTable.first() != null){
             for(Element current : dailyNewsTable.first().children()){
                 String date = current.child(0).html();
@@ -73,19 +83,7 @@ public class ContentParser {
 
         DB.dates = dates;
         DB.allSubstitutions = substitutions;
-        DB.pauses = pauses;
         DB.newsOfTheDays = newsOfTheDays;
-    }
-
-    public static void filterSubstitutionsForMyClass(){
-        ArrayList<Substitution> mySubstitutions = new ArrayList<>();
-        DB.mySubstitutions = mySubstitutions;
-
-        for(Substitution substitution : DB.allSubstitutions){
-            if(keyMatchesClass(substitution.getKlassen())){
-                mySubstitutions.add(substitution);
-            }
-        }
     }
 
     private static boolean keyMatchesClass(String klasse){
@@ -93,6 +91,11 @@ public class ContentParser {
         if(klasse.contains(myClass.getFullName())){
             // matches grade and letter
             // example key: "05B", "10E" or "12"
+            return true;
+        }
+        if(klasse.contains(myClass.getGrade()) && klasse.contains(myClass.getLetter())){
+            // matches grade and letter separate
+            // example key: "10ABC", "05DEF"
             return true;
         }
         if(klasse.length() == 2 && klasse.contains(myClass.getGrade())){
