@@ -10,6 +10,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -48,6 +50,7 @@ public class ConnectionClient {
      * @throws IOException see OkHttpClient
      */
     public String getHtml() throws IOException {
+        Logger.getLogger(OkHttpClient.class.getName()).setLevel(Level.FINE);
         setSessionValues();
         login();
         return getContent();
@@ -118,6 +121,8 @@ public class ConnectionClient {
             System.out.println("Headers: " + response.headers());
             System.out.println("New Cookie: " + sessionCookieValue);
         }
+        response.body().close();
+        response.close();
     }
 
     private String buildPostParams(String user, String pw) throws UnsupportedEncodingException {
