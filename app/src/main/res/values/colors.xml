@@ -7,4 +7,6 @@
     <color name="inActiveSelector">#9CC88F</color>
     <color name="activeText">#fff</color>
     <color name="inactiveText">#000</color>
+    <color name="tableHeadBackground">#AAA</color>
+    <color name="tableHeadTextColor">#FFF</color>
 </resources>

@@ -3,6 +3,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
-    <dimen name="headline_size">25sp</dimen>
-    <dimen name="selector_textsize">25sp</dimen>
+    <dimen name="textsize_headline">25sp</dimen>
+    <dimen name="textsize_selection">25sp</dimen>
+    <dimen name="textsize_table">20sp</dimen>
 </resources>

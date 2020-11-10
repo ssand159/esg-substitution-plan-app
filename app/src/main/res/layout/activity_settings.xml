@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:text="@string/settings_activity_title"
         android:gravity="center_horizontal"
-        android:textSize="@dimen/headline_size"
+        android:textSize="@dimen/textsize_headline"
         />
 
     <TextView

@@ -65,7 +65,7 @@
             android:layout_marginBottom="10dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:textSize="@dimen/selector_textsize"
+            android:textSize="@dimen/textsize_selection"
             android:background="@color/activeSelector"
             />
         <TextView
@@ -78,7 +78,7 @@
             android:onClick="allClassesClicked"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:textSize="@dimen/selector_textsize"
+            android:textSize="@dimen/textsize_selection"
             android:layout_marginBottom="10dp"
             android:text="@string/main_buttonAllClasses"
             android:layout_weight="1"
@@ -93,7 +93,7 @@
             android:onClick="pauseClicked"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:textSize="@dimen/selector_textsize"
+            android:textSize="@dimen/textsize_selection"
             android:layout_marginBottom="10dp"
             android:text="@string/main_buttonPause"
             android:layout_weight="1"

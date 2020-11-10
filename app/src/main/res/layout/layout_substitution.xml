@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.esgsubstitutionplanapp.content.SubstitutionView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/substitution"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="10"
-    android:paddingStart="5dp"
-    android:paddingEnd="5dp"
     >
     <TextView
         android:id="@+id/template_klassen"
@@ -38,4 +37,4 @@
     <TextView
         android:id="@+id/template_verlegtvon"
         style="@style/cell"/>
-</LinearLayout>
+</com.esgsubstitutionplanapp.content.SubstitutionView>

@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:textSize="@dimen/headline_size"
+        android:textSize="@dimen/textsize_headline"
         android:layout_margin="10dp"
         android:text="@string/main_activity_title"
         />
@@ -38,7 +38,7 @@
     <LinearLayout
         android:id="@+id/datePicker"
         android:layout_below="@+id/settingsContainer"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -66,11 +66,9 @@
             android:focusable="true"
             android:onClick="myClassClicked"
             android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:textSize="@dimen/selector_textsize"
+            android:textSize="@dimen/textsize_selection"
             android:background="@color/activeSelector"
             android:textColor="@color/activeText"
             />
@@ -83,9 +81,7 @@
             android:focusable="true"
             android:onClick="allClassesClicked"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:textSize="@dimen/selector_textsize"
-            android:layout_marginBottom="10dp"
+            android:textSize="@dimen/textsize_selection"
             android:text="@string/main_buttonAllClasses"
             android:layout_weight="1"
             android:background="@color/inActiveSelector"/>
@@ -98,9 +94,7 @@
             android:focusable="true"
             android:onClick="pauseClicked"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:textSize="@dimen/selector_textsize"
-            android:layout_marginBottom="10dp"
+            android:textSize="@dimen/textsize_selection"
             android:text="@string/main_buttonPause"
             android:layout_weight="1"
             android:background="@color/inActiveSelector"/>
@@ -114,6 +108,7 @@
         android:background="#f7af3b"
         android:gravity="start"
         android:padding="5dp"
+        android:layout_marginTop="10dp"
         android:textSize="20sp"
         android:visibility="gone"
         android:layout_marginLeft="16dp"
@@ -126,48 +121,48 @@
         android:layout_height="match_parent"
         android:layout_below="@id/newsoftheday"
         android:orientation="horizontal"
+        android:layout_marginTop="10dp"
         >
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:weightSum="10"
-            android:paddingLeft="10dp">
+            android:paddingLeft="16dp">
             <TextView
                 android:text="Klasse"
-                style="@style/cell"/>
+                style="@style/tablehead"/>
             <TextView
                 android:text="Std"
-                style="@style/cell"/>
+                style="@style/tablehead"/>
             <TextView
                 android:text="Art"
-                style="@style/cell"/>
+                style="@style/tablehead"/>
             <TextView
                 android:text="Vertretung"
-                style="@style/cell"/>
+                style="@style/tablehead"/>
             <TextView
                 android:text="Fach"
-                style="@style/cell"/>
+                style="@style/tablehead"/>
             <TextView
                 android:text="Raum"
-                style="@style/cell"/>
+                style="@style/tablehead"/>
             <TextView
                 android:text="Fach2"
-                style="@style/cell"/>
+                style="@style/tablehead"/>
             <TextView
                 android:text="Zu vertreten"
-                style="@style/cell"/>
+                style="@style/tablehead"/>
             <TextView
                 android:text="Bemerkung"
-                style="@style/cell"/>
+                style="@style/tablehead"/>
             <TextView
                 android:text="Verlegt von"
-                style="@style/cell"/>
+                style="@style/tablehead"/>
         </LinearLayout>
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="16dp"
             >
             <LinearLayout
                 android:id="@+id/contentView"
