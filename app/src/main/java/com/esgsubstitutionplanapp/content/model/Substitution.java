@@ -4,7 +4,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class Substitution {
 
-    private boolean matchesMyClass;
+    private SubstitutionType type;
+
     private String klassen;
     private String datum;
     private String std;
@@ -35,12 +36,12 @@ public class Substitution {
                 '}';
     }
 
-    public void setMatchesMyClass(boolean matchesMyClass) {
-        this.matchesMyClass = matchesMyClass;
+    public void setType(SubstitutionType type) {
+        this.type = type;
     }
 
-    public boolean matchesMyClass() {
-        return matchesMyClass;
+    public SubstitutionType getType() {
+        return type;
     }
 
     public String getKlassen() {
