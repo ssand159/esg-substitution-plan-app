@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:paddingTop="16dp"
-    android:visibility="visible"
+    android:paddingTop="10dp"
     android:id="@+id/mainActivity"
     >
 
