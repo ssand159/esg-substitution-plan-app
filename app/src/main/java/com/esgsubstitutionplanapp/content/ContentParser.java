@@ -4,7 +4,6 @@ import com.esgsubstitutionplanapp.DB;
 import com.esgsubstitutionplanapp.content.model.Date;
 import com.esgsubstitutionplanapp.content.model.NewsOfTheDay;
 import com.esgsubstitutionplanapp.content.model.Substitution;
-import com.esgsubstitutionplanapp.content.model.SubstitutionType;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -12,7 +11,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -47,19 +45,10 @@ public class ContentParser {
                 substitution.setBemerkung(getValue(current, "Bemerkung"));
                 substitution.setVerlegtVon(getValue(current, "verlegt&nbsp;von"));
 
-                // add
-                if(substitution.getArt().toLowerCase().contains("pausenaufsicht")){
-                    substitution.setArt(null);
-                    substitution.setType(SubstitutionType.SUBSTITUTION_PAUSE);
-                } else {
-                    substitutions.add(substitution);
-                    // filter userclasses
-                    if(keyMatchesClass(substitution.getKlassen())){
-                        substitution.setType(SubstitutionType.SUBSTITUTION_OF_MYCLASS);
-                    } else {
-                        substitution.setType(SubstitutionType.SUBSTITUTION_ALL);
-                    }
-                }
+                // add substitutions
+                substitutions.add(substitution);
+
+                // add date
                 String date = substitution.getDatum();
                 if(date != null && !date.isEmpty()){
                     dates.add(new Date(date));
@@ -86,35 +75,6 @@ public class ContentParser {
         DB.newsOfTheDays = newsOfTheDays;
     }
 
-    private static boolean keyMatchesClass(String klasse){
-        MyClass myClass = DB.myClass;
-        if(klasse.contains(myClass.getFullName())){
-            // matches grade and letter
-            // example key: "05B", "10E" or "12"
-            return true;
-        }
-        if(klasse.contains(myClass.getGrade()) && klasse.contains(myClass.getLetter())){
-            // matches grade and letter separate
-            // example key: "10ABC", "05DEF"
-            return true;
-        }
-        if(klasse.length() == 2 && klasse.contains(myClass.getGrade())){
-            // matches grade only
-            // example key: "05" or "09"
-            return klasse.equals(myClass.getGrade());
-        }
-        if(klasse.contains(",")){
-            String[] classes = klasse.split(",");
-            for(String aClass : classes){
-                if(aClass.trim().length() == 2 && aClass.trim().equals(myClass.getGrade())){
-                    // match grade if multiple grades are given
-                    // example key: "07, 08"
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
 
     private static String getValue(Element current, String key){
         for(Element cell : current.children()){

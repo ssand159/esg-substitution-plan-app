@@ -44,6 +44,19 @@ public class ContentManager {
         }
     }
 
+    public void filterSubstitutionsForClass(){
+        for(Substitution substitution : DB.allSubstitutions){
+            if(substitution.getType() != SubstitutionType.SUBSTITUTION_PAUSE){
+                // filter userclasses
+                if(keyMatchesClass(substitution.getKlassen())){
+                    substitution.setType(SubstitutionType.SUBSTITUTION_OF_MYCLASS);
+                } else {
+                    substitution.setType(SubstitutionType.SUBSTITUTION_ALL);
+                }
+            }
+        }
+    }
+
     public void updateContent(SubstitutionType type, String activeDate){
         boolean somethingIsVisible = false;
         int childCount = contentView.getChildCount();
@@ -172,4 +185,35 @@ public class ContentManager {
             return "";
         }
     }
+
+    private boolean keyMatchesClass(String klasse){
+        MyClass myClass = DB.myClass;
+        if(klasse.contains(myClass.getFullName())){
+            // matches grade and letter
+            // example key: "05B", "10E" or "12"
+            return true;
+        }
+        if(klasse.contains(myClass.getGrade()) && klasse.contains(myClass.getLetter())){
+            // matches grade and letter separate
+            // example key: "10ABC", "05DEF"
+            return true;
+        }
+        if(klasse.length() == 2 && klasse.contains(myClass.getGrade())){
+            // matches grade only
+            // example key: "05" or "09"
+            return klasse.equals(myClass.getGrade());
+        }
+        if(klasse.contains(",")){
+            String[] classes = klasse.split(",");
+            for(String aClass : classes){
+                if(aClass.trim().length() == 2 && aClass.trim().equals(myClass.getGrade())){
+                    // match grade if multiple grades are given
+                    // example key: "07, 08"
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

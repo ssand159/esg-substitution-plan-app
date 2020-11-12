@@ -58,13 +58,8 @@ public class MainActivity extends Activity {
 
         // set up test data
         TestData.setUpTestData();
-    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // check if this is the first start
+        // check settings and show content
         if(DB.username.isEmpty() || DB.password.isEmpty()){
             // check if settings are loaded correct
             startSettings(null);
@@ -75,15 +70,28 @@ public class MainActivity extends Activity {
                 myclassText.setText(DB.myClass.getFullName());
                 contentManager.loadContent();
                 activeDate = contentManager.paintDateViews();
+                contentManager.filterSubstitutionsForClass();
                 contentManager.setUpContent();
                 myClassClicked(null);
             } catch (Exception e){
                 showError(e);
             }
         }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         if(DB.classChanged){
-            DB.classChanged = false;
-            myClassClicked(null);
+            try {
+                DB.classChanged = false;
+                contentManager.filterSubstitutionsForClass();
+                contentManager.setUpContent();
+                myClassClicked(null);
+            } catch (Exception e){
+                showError(e);
+            }
         }
     }
 
