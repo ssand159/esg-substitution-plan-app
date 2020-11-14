@@ -4,7 +4,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "com.vertretungsplan"
+        applicationId "de.landau.vertretungsplan"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
