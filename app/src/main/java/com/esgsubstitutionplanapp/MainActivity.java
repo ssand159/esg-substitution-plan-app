@@ -27,6 +27,7 @@ public class MainActivity extends Activity {
     private TextView errorText;
     private View contentContainer;
     private TextView newsOfTheDayText;
+    private View firstDateView;
 
     // manual refresh
     private SwipeRefreshLayout swipeContainer;
@@ -50,13 +51,16 @@ public class MainActivity extends Activity {
 
         // setup data
         DB.setup();
-        contentManager = new ContentManager(this, datePicker, contentView, noContentView, contentContainer);
+        contentManager = new ContentManager(this, datePicker, contentView, noContentView, contentContainer, newsOfTheDayText);
 
         // set up refresh
         // Your code to refresh the list here.
         // Make sure you call swipeContainer.setRefreshing(false)
         // once the network request has completed successfully.
-        swipeContainer.setOnRefreshListener(this::downloadAndShowContent);
+        swipeContainer.setOnRefreshListener(() -> {
+            downloadAndShowContent();
+            datePicker.getChildAt(0).performClick();
+        });
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
@@ -71,6 +75,7 @@ public class MainActivity extends Activity {
             startSettings(null);
         } else {
             downloadAndShowContent();
+            datePicker.getChildAt(0).performClick();
         }
     }
 
@@ -79,7 +84,7 @@ public class MainActivity extends Activity {
         super.onResume();
         if(DB.classChanged){
             DB.classChanged = false;
-            updateContent(DB.dates.first().getDate());
+            datePicker.getChildAt(0).performClick();
         }
     }
 
@@ -110,7 +115,7 @@ public class MainActivity extends Activity {
     private void updateContent(String date){
         try {
             errorText.setVisibility(View.GONE);
-            contentManager.filterSubstitutions(date);
+            contentManager.changeDay(date);
         } catch (Exception e){
             showError(e);
         }

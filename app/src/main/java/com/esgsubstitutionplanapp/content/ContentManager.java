@@ -25,23 +25,30 @@ public class ContentManager {
     private final LinearLayout contentView;
     private final View contentContainer;
     private final TextView noContentView;
+    private final TextView newsOfTheDayView;
 
-    public ContentManager(MainActivity mainActivity, LinearLayout datePicker, LinearLayout contentView, TextView noContentView, View contentContainer){
+    public ContentManager(MainActivity mainActivity, LinearLayout datePicker, LinearLayout contentView, TextView noContentView, View contentContainer, TextView newsOfTheDayView){
         this.mainActivity = mainActivity;
         this.datePicker = datePicker;
         this.contentView = contentView;
         this.noContentView = noContentView;
         this.contentContainer = contentContainer;
+        this.newsOfTheDayView = newsOfTheDayView;
     }
 
     public void downloadAndShowContent() throws ExecutionException, InterruptedException {
         new RetrieveContentTask().execute().get();
         paintDateViews();
         paintSubstitutionViews();
-        filterSubstitutions(DB.dates.first().getDate());
+        changeDay(DB.dates.first().getDate());
     }
 
-    public void filterSubstitutions(String activeDate){
+    public void changeDay(String activeDate){
+        filterSubstitutionforDay(activeDate);
+        showNewsOfTheDay(activeDate);
+    }
+
+    private void filterSubstitutionforDay(String activeDate){
         boolean somethingIsVisible = false;
         int childCount = contentView.getChildCount();
 
@@ -58,7 +65,6 @@ public class ContentManager {
                 }
             }
         }
-
         if(!somethingIsVisible){
             noContentView.setVisibility(View.VISIBLE);
             contentContainer.setVisibility(View.GONE);
@@ -66,7 +72,21 @@ public class ContentManager {
             noContentView.setVisibility(View.GONE);
             contentContainer.setVisibility(View.VISIBLE);
         }
+    }
 
+    private void showNewsOfTheDay(String activeDate){
+        for(Date date : DB.dates){
+            if(date.getDate().equals(activeDate)){
+                String newsOfTheDay = date.getNewsOfTheDay();
+                if(newsOfTheDay != null && !newsOfTheDay.isEmpty()){
+                    newsOfTheDayView.setText(newsOfTheDay);
+                    newsOfTheDayView.setVisibility(View.VISIBLE);
+                } else {
+                    newsOfTheDayView.setVisibility(View.GONE);
+                }
+                break;
+            }
+        }
     }
 
     private void paintSubstitutionViews() {

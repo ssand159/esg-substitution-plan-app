@@ -102,7 +102,7 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if(parent.getId() == R.id.grade){
-            if(position >= 6){
+            if(position == 0 || position >= 7){
                 letterSpinner.setVisibility(View.INVISIBLE);
             } else {
                 letterSpinner.setVisibility(View.VISIBLE);

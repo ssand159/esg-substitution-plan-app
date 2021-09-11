@@ -39,9 +39,9 @@ public class ContentParser {
                 substitution.setFach(getValue(current, "Fach"));
                 substitution.setRaum(getValue(current, "Raum"));
                 substitution.setFach2(getValue(current, "(Fach)"));
-                substitution.setZuVertreten(getValue(current, "zu&nbsp;vertreten"));
+                substitution.setZuVertreten(getValue(current, "zu vertreten"));
                 substitution.setBemerkung(getValue(current, "Bemerkung"));
-                substitution.setVerlegtVon(getValue(current, "verlegt&nbsp;von"));
+                substitution.setVerlegtVon(getValue(current, "verlegt von"));
 
                 // add substitutions
                 substitutions.add(substitution);
@@ -76,7 +76,7 @@ public class ContentParser {
     private static String getValue(Element current, String key){
         for(Element cell : current.children()){
             if(cell.attr("data-layer").trim().equalsIgnoreCase(key)){
-                return cell.text().trim().replace("-","");
+                return cell.text().trim().replace("---","");
             }
         }
         return null;
