@@ -137,7 +137,6 @@ public class ContentManager {
         params.weight = 1.0f;
 
         // paint every date available
-        boolean first = true;
         for(Date date : DB.dates){
             TextView dateView = new TextView(mainActivity);
             dateView.setText(date.getDate());
@@ -147,14 +146,8 @@ public class ContentManager {
             dateView.setClickable(true);
             dateView.setFocusable(true);
             dateView.setOnClickListener(v -> mainActivity.dateClicked(dateView, date.getDate()));
-            if(first){
-                first = false;
-                dateView.setBackgroundColor(mainActivity.getResources().getColor(R.color.activeSelector));
-                dateView.setTextColor(mainActivity.getResources().getColor(R.color.activeText));
-            } else {
-                dateView.setBackgroundColor(mainActivity.getResources().getColor(R.color.inActiveSelector));
-                dateView.setTextColor(mainActivity.getResources().getColor(R.color.inactiveText));
-            }
+            dateView.setBackgroundColor(mainActivity.getResources().getColor(R.color.inActiveSelector));
+            dateView.setTextColor(mainActivity.getResources().getColor(R.color.inactiveText));
             datePicker.addView(dateView);
         }
     }

@@ -27,7 +27,6 @@ public class MainActivity extends Activity {
     private TextView errorText;
     private View contentContainer;
     private TextView newsOfTheDayText;
-    private View firstDateView;
 
     // manual refresh
     private SwipeRefreshLayout swipeContainer;
@@ -53,10 +52,7 @@ public class MainActivity extends Activity {
         DB.setup();
         contentManager = new ContentManager(this, datePicker, contentView, noContentView, contentContainer, newsOfTheDayText);
 
-        // set up refresh
-        // Your code to refresh the list here.
-        // Make sure you call swipeContainer.setRefreshing(false)
-        // once the network request has completed successfully.
+        // force refresh
         swipeContainer.setOnRefreshListener(() -> {
             downloadAndShowContent();
             datePicker.getChildAt(0).performClick();
