@@ -42,7 +42,6 @@ public class WelcomeActivity extends Activity {
     public void finish(View view){
         // save status
         DB.setWasStartedBefore(true);
-        DB.setLastUpdate(System.currentTimeMillis() - DB.fiveMinutesInMillis - DB.fiveMinutesInMillis);
 
         // start main
         Intent main = new Intent(this, MainActivity.class);

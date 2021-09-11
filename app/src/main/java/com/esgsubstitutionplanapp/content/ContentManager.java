@@ -15,7 +15,6 @@ import com.esgsubstitutionplanapp.R;
 import com.esgsubstitutionplanapp.connection.ConnectionClient;
 import com.esgsubstitutionplanapp.content.model.Date;
 import com.esgsubstitutionplanapp.content.model.Substitution;
-import com.esgsubstitutionplanapp.content.model.SubstitutionType;
 
 import java.util.concurrent.ExecutionException;
 
@@ -26,38 +25,23 @@ public class ContentManager {
     private final LinearLayout contentView;
     private final View contentContainer;
     private final TextView noContentView;
-    private final TextView errorView;
 
-    public ContentManager(MainActivity mainActivity, LinearLayout datePicker, LinearLayout contentView, TextView noContentView, View contentContainer, TextView errorView){
+    public ContentManager(MainActivity mainActivity, LinearLayout datePicker, LinearLayout contentView, TextView noContentView, View contentContainer){
         this.mainActivity = mainActivity;
         this.datePicker = datePicker;
         this.contentView = contentView;
         this.noContentView = noContentView;
         this.contentContainer = contentContainer;
-        this.errorView = errorView;
     }
 
-    public void loadContent() throws ExecutionException, InterruptedException {
-        if(DB.getLastUpdate() + DB.fiveMinutesInMillis < System.currentTimeMillis()){
-            DB.setLastUpdate(System.currentTimeMillis());
-            new RetrieveContentTask().execute().get();
-        }
+    public void downloadAndShowContent() throws ExecutionException, InterruptedException {
+        new RetrieveContentTask().execute().get();
+        paintDateViews();
+        paintSubstitutionViews();
+        filterSubstitutions(DB.dates.first().getDate());
     }
 
-    public void filterSubstitutionsForClass(){
-        for(Substitution substitution : DB.allSubstitutions){
-            if(substitution.getType() != SubstitutionType.SUBSTITUTION_PAUSE){
-                // filter userclasses
-                if(keyMatchesClass(substitution.getKlassen())){
-                    substitution.setType(SubstitutionType.SUBSTITUTION_OF_MYCLASS);
-                } else {
-                    substitution.setType(SubstitutionType.SUBSTITUTION_ALL);
-                }
-            }
-        }
-    }
-
-    public void updateContent(SubstitutionType type, String activeDate){
+    public void filterSubstitutions(String activeDate){
         boolean somethingIsVisible = false;
         int childCount = contentView.getChildCount();
 
@@ -66,7 +50,7 @@ public class ContentManager {
                 View current = contentView.getChildAt(i);
                 SubstitutionView substitutionView = current.findViewById(R.id.substitution);
 
-                if(substitutionView.getSubstitutionType().equals(type) && substitutionView.getDate().equals(activeDate)){
+                if(keyMatchesClass(substitutionView.getKlassen()) && substitutionView.getDate().equals(activeDate)){
                     current.setVisibility(View.VISIBLE);
                     somethingIsVisible = true;
                 } else {
@@ -82,50 +66,38 @@ public class ContentManager {
             noContentView.setVisibility(View.GONE);
             contentContainer.setVisibility(View.VISIBLE);
         }
+
     }
 
-    public void setUpContent() throws ExecutionException, InterruptedException {
-        loadContent();
-
+    private void paintSubstitutionViews() {
         LayoutInflater inflater = (LayoutInflater) mainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        contentView.removeAllViews();
-        errorView.setVisibility(View.GONE);
-
-        if(DB.allSubstitutions == null || DB.allSubstitutions.isEmpty()){
-            noContentView.setVisibility(View.VISIBLE);
-            contentContainer.setVisibility(View.GONE);
-        } else {
-            noContentView.setVisibility(View.GONE);
-            contentContainer.setVisibility(View.VISIBLE);
-            for(Substitution substitution : DB.allSubstitutions){
-                addToView(inflater, contentView, substitution);
-            }
-        }
-    }
-
-    private void addToView(LayoutInflater inflater, LinearLayout scrollView, Substitution substitution){
-        View custom = inflater.inflate(R.layout.layout_substitution, null);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        custom.setLayoutParams(params);
-        scrollView.addView(custom);
+        contentView.removeAllViews();
 
-        // add attributes
-        SubstitutionView substitutionView = custom.findViewById(R.id.substitution);
-        substitutionView.setSubstitutionType(substitution.getType());
-        substitutionView.setDate(substitution.getDatum());
+        for(Substitution substitution : DB.substitutions){
+            View custom = inflater.inflate(R.layout.layout_substitution, null);
+            custom.setLayoutParams(params);
+            contentView.addView(custom);
 
-        // set all view inside substitutionView
-        addText(custom, R.id.template_klassen, substitution.getKlassen());
-        addText(custom, R.id.template_art, substitution.getArt());
-        addText(custom, R.id.template_bemerkung, substitution.getBemerkung());
-        addText(custom, R.id.template_fach, substitution.getFach());
-        addText(custom, R.id.template_fach2, substitution.getFach2());
-        addText(custom, R.id.template_std, substitution.getStd());
-        addText(custom, R.id.template_verlegtvon, substitution.getVerlegtVon());
-        addText(custom, R.id.template_vertretung, substitution.getVertretung());
-        addText(custom, R.id.template_zuvertreten, substitution.getZuVertreten());
-        addText(custom, R.id.template_raum, substitution.getRaum());
+            // add attributes
+            SubstitutionView substitutionView = custom.findViewById(R.id.substitution);
+            substitutionView.setDate(substitution.getDatum());
+            substitutionView.setKlassen(substitution.getKlassen());
+            substitutionView.setVisibility(View.GONE);
+
+            // set all view inside substitutionView
+            addText(custom, R.id.template_klassen, substitution.getKlassen());
+            addText(custom, R.id.template_art, substitution.getArt());
+            addText(custom, R.id.template_bemerkung, substitution.getBemerkung());
+            addText(custom, R.id.template_fach, substitution.getFach());
+            addText(custom, R.id.template_fach2, substitution.getFach2());
+            addText(custom, R.id.template_std, substitution.getStd());
+            addText(custom, R.id.template_verlegtvon, substitution.getVerlegtVon());
+            addText(custom, R.id.template_vertretung, substitution.getVertretung());
+            addText(custom, R.id.template_zuvertreten, substitution.getZuVertreten());
+            addText(custom, R.id.template_raum, substitution.getRaum());
 //        addText(custom, R.id.template_row_datum, R.id.template_datum, substitution.getDatum());
+        }
     }
 
     private void addText(View custom, int textViewId, String text){
@@ -137,13 +109,15 @@ public class ContentManager {
         }
     }
 
-    public String paintDateViews(){
+    private void paintDateViews(){
+        // cleanup & init
         datePicker.removeAllViews();
-        boolean first = true;
-        Date firstDate = null;
         datePicker.setWeightSum(DB.dates.size());
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.weight = 1.0f;
+
+        // paint every date available
+        boolean first = true;
         for(Date date : DB.dates){
             TextView dateView = new TextView(mainActivity);
             dateView.setText(date.getDate());
@@ -154,16 +128,15 @@ public class ContentManager {
             dateView.setFocusable(true);
             dateView.setOnClickListener(v -> mainActivity.dateClicked(dateView, date.getDate()));
             if(first){
+                first = false;
                 dateView.setBackgroundColor(mainActivity.getResources().getColor(R.color.activeSelector));
                 dateView.setTextColor(mainActivity.getResources().getColor(R.color.activeText));
-                first = false;
-                firstDate = date;
             } else {
                 dateView.setBackgroundColor(mainActivity.getResources().getColor(R.color.inActiveSelector));
+                dateView.setTextColor(mainActivity.getResources().getColor(R.color.inactiveText));
             }
             datePicker.addView(dateView);
         }
-        return firstDate.getDate();
     }
 
 
@@ -188,6 +161,9 @@ public class ContentManager {
 
     private boolean keyMatchesClass(String klasse){
         MyClass myClass = DB.myClass;
+        if(myClass.getGrade().contains("alle")){
+            return true;
+        }
         if(klasse.contains(myClass.getFullName())){
             // matches grade and letter
             // example key: "05B", "10E" or "12"

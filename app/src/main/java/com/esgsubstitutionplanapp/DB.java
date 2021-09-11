@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 
 import com.esgsubstitutionplanapp.content.MyClass;
 import com.esgsubstitutionplanapp.content.model.Date;
-import com.esgsubstitutionplanapp.content.model.NewsOfTheDay;
 import com.esgsubstitutionplanapp.content.model.Substitution;
 
 import java.util.ArrayList;
@@ -17,7 +16,6 @@ public class DB {
 
     // static fields
     public static final String endpoint = "https://www.esg-landau.de/unterstuetzung/informationen/vertretungsplan";
-    public static final long fiveMinutesInMillis = 300_000L;
 
     // user settings
     public static String username;
@@ -26,13 +24,11 @@ public class DB {
 
     // general settings
     public static boolean wasStartedBefore;
-    private static long lastUpdate = 0;
     public static boolean classChanged = false;
 
     // content
     public static SortedSet<Date> dates;
-    public static ArrayList<Substitution> allSubstitutions;
-    public static ArrayList<NewsOfTheDay> newsOfTheDays;
+    public static ArrayList<Substitution> substitutions;
 
     public static void saveUserData(String username, String password, MyClass myClass){
         DB.username = username;
@@ -62,17 +58,6 @@ public class DB {
         DB.username = userPreferences.getString("user", "");
         DB.password = userPreferences.getString("password", "");
         DB.myClass = new MyClass(grade, letter);
-
-        // content
-        DB.lastUpdate = System.currentTimeMillis() - fiveMinutesInMillis - 1000;
-//        DB.lastUpdate = dataPreferences.getLong("lastUpdate", System.currentTimeMillis() - fiveMinutesInMillis - 1000);
-    }
-
-    public static void setLastUpdate(long lastUpdate) {
-        SharedPreferences.Editor editor = contentPreferences.edit();
-        editor.putLong("lastUpdate", lastUpdate);
-        editor.apply();
-        DB.lastUpdate = lastUpdate;
     }
 
     public static void setWasStartedBefore(boolean wasStartedBefore) {
@@ -82,7 +67,4 @@ public class DB {
         DB.wasStartedBefore = true;
     }
 
-    public static long getLastUpdate() {
-        return lastUpdate;
-    }
 }

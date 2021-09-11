@@ -2,7 +2,6 @@ package com.esgsubstitutionplanapp.content;
 
 import com.esgsubstitutionplanapp.DB;
 import com.esgsubstitutionplanapp.content.model.Date;
-import com.esgsubstitutionplanapp.content.model.NewsOfTheDay;
 import com.esgsubstitutionplanapp.content.model.Substitution;
 
 import org.jsoup.Jsoup;
@@ -22,15 +21,14 @@ public class ContentParser {
     public static void parseContent(String html){
         SortedSet<Date> dates = new TreeSet<>();
         ArrayList<Substitution> substitutions = new ArrayList<>();
-        ArrayList<NewsOfTheDay> newsOfTheDays = new ArrayList<>();
 
         Document document = Jsoup.parse(html);
         Elements tableBody = document.getElementById(ID_TABLE).getElementsByTag("tbody");
         Elements dailyNewsTable = document.getElementById(DAILY_NEWS).getElementsByTag("tbody");
 
-        if(tableBody != null && tableBody.first() != null){
-
-            for(Element current : tableBody.first().children()){
+        Element firstSubstitution = tableBody.first();
+        if(firstSubstitution != null){
+            for(Element current : firstSubstitution.children()){
                 // create substitution object
                 Substitution substitution = new Substitution();
                 substitution.setKlassen(getValue(current, "Klasse(n)"));
@@ -54,25 +52,24 @@ public class ContentParser {
                     dates.add(new Date(date));
                 }
             }
-        } else {
-            //TODO show some errormessage
         }
 
-        // TODO add this to Date
-        if(dailyNewsTable != null && dailyNewsTable.first() != null){
-            for(Element current : dailyNewsTable.first().children()){
-                String date = current.child(0).html();
+        Element firstNews = dailyNewsTable.first();
+        if(firstNews != null){
+            for(Element current : firstNews.children()){
+                String temp_date = current.child(0).html();
                 String news = current.child(1).html().replace("<br>", "\n");
-                NewsOfTheDay newsOfTheDay = new NewsOfTheDay(date, news);
-                newsOfTheDays.add(newsOfTheDay);
+                for(Date date : dates){
+                    if(date.getDate().equals(temp_date)){
+                        date.setNewsOfTheDay(news);
+                    }
+                }
             }
-        } else {
-            //TODO show some errormessage
+
         }
 
         DB.dates = dates;
-        DB.allSubstitutions = substitutions;
-        DB.newsOfTheDays = newsOfTheDays;
+        DB.substitutions = substitutions;
     }
 
 

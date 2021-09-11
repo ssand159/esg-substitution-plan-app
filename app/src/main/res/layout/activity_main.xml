@@ -1,202 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:paddingTop="10dp"
-    android:id="@+id/mainActivity"
-    >
+    android:id="@+id/mainActivity">
 
-    <LinearLayout
-        android:id="@+id/settingsContainer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        >
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/ic_settings"
-            android:background="@null"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="startSettings"
-            android:contentDescription="@string/main_buttonSettings" />
-    </LinearLayout>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:textSize="@dimen/textsize_headline"
-        android:layout_margin="10dp"
-        android:text="@string/main_activity_title"
-        />
-
-    <LinearLayout
-        android:id="@+id/datePicker"
-        android:layout_below="@+id/settingsContainer"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        />
-
-    <LinearLayout
-        android:id="@+id/classPicker"
-        android:layout_below="@+id/datePicker"
-        android:layout_marginTop="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        >
-        <TextView
-            android:id="@+id/myclassText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="myClassClicked"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:textSize="@dimen/textsize_selection"
-            android:background="@color/activeSelector"
-            android:textColor="@color/activeText"
-            />
-        <TextView
-            android:id="@+id/allclassesText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="allClassesClicked"
-            android:layout_gravity="center"
-            android:textSize="@dimen/textsize_selection"
-            android:text="@string/main_buttonAllClasses"
-            android:layout_weight="1"
-            android:background="@color/inActiveSelector"/>
-        <TextView
-            android:id="@+id/pauseText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="pauseClicked"
-            android:layout_gravity="center"
-            android:textSize="@dimen/textsize_selection"
-            android:text="@string/main_buttonPause"
-            android:layout_weight="1"
-            android:background="@color/inActiveSelector"/>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/newsoftheday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/classPicker"
-        android:background="#f7af3b"
-        android:gravity="start"
-        android:padding="5dp"
-        android:layout_marginTop="10dp"
-        android:textSize="20sp"
-        android:visibility="gone"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        />
-
-    <LinearLayout
-        android:id="@+id/contentContainer"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/newsoftheday"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
+        tools:context=".MainActivity"
+        android:paddingTop="10dp"
         >
+
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="10"
-            android:paddingLeft="16dp">
-            <TextView
-                android:text="Klasse"
-                style="@style/tablehead"/>
-            <TextView
-                android:text="Std"
-                style="@style/tablehead"/>
-            <TextView
-                android:text="Art"
-                style="@style/tablehead"/>
-            <TextView
-                android:text="Vertretung"
-                style="@style/tablehead"/>
-            <TextView
-                android:text="Fach"
-                style="@style/tablehead"/>
-            <TextView
-                android:text="Raum"
-                style="@style/tablehead"/>
-            <TextView
-                android:text="Fach2"
-                style="@style/tablehead"/>
-            <TextView
-                android:text="Zu vertreten"
-                style="@style/tablehead"/>
-            <TextView
-                android:text="Bemerkung"
-                style="@style/tablehead"/>
-            <TextView
-                android:text="Verlegt von"
-                style="@style/tablehead"/>
+            android:id="@+id/settingsContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            >
+            <ImageButton
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@drawable/ic_settings"
+                android:background="@null"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="startSettings"
+                android:contentDescription="@string/main_buttonSettings" />
         </LinearLayout>
-        <HorizontalScrollView
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="@dimen/textsize_headline"
+            android:layout_margin="10dp"
+            android:text="@string/main_activity_title"
+            />
+
+        <LinearLayout
+            android:id="@+id/datePicker"
+            android:layout_below="@+id/settingsContainer"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            />
+
+        <TextView
+            android:id="@+id/newsoftheday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/datePicker"
+            android:background="#f7af3b"
+            android:gravity="start"
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/contentContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/newsoftheday"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             >
             <LinearLayout
-                android:id="@+id/contentView"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                />
+                android:orientation="vertical"
+                android:weightSum="10"
+                android:paddingLeft="16dp">
+                <TextView
+                    android:text="Klasse"
+                    style="@style/tablehead"/>
+                <TextView
+                    android:text="Std"
+                    style="@style/tablehead"/>
+                <TextView
+                    android:text="Art"
+                    style="@style/tablehead"/>
+                <TextView
+                    android:text="Vertretung"
+                    style="@style/tablehead"/>
+                <TextView
+                    android:text="Fach"
+                    style="@style/tablehead"/>
+                <TextView
+                    android:text="Raum"
+                    style="@style/tablehead"/>
+                <TextView
+                    android:text="Fach2"
+                    style="@style/tablehead"/>
+                <TextView
+                    android:text="Zu vertreten"
+                    style="@style/tablehead"/>
+                <TextView
+                    android:text="Bemerkung"
+                    style="@style/tablehead"/>
+                <TextView
+                    android:text="Verlegt von"
+                    style="@style/tablehead"/>
+            </LinearLayout>
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
+                <LinearLayout
+                    android:id="@+id/contentView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    />
 
-        </HorizontalScrollView>
-    </LinearLayout>
+            </HorizontalScrollView>
+        </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/noContentView"
-        android:layout_below="@+id/classPicker"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/main_noContentText"
-        android:visibility="gone"
-        android:layout_margin="50dp"
-        android:textSize="20sp"
-        android:gravity="center">
-    </TextView>
+        <TextView
+            android:id="@+id/noContentView"
+            android:layout_below="@+id/classPicker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/main_noContentText"
+            android:visibility="gone"
+            android:layout_margin="50dp"
+            android:textSize="20sp"
+            android:gravity="center">
+        </TextView>
 
-    <TextView
-        android:id="@+id/errorView"
-        android:layout_below="@+id/classPicker"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/main_errorText"
-        android:visibility="gone"
-        android:layout_margin="50dp"
-        android:textColor="#f00"
-        android:textSize="20sp"
-        android:gravity="center">
-    </TextView>
+        <TextView
+            android:id="@+id/errorView"
+            android:layout_below="@+id/classPicker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/main_errorText"
+            android:visibility="gone"
+            android:layout_margin="50dp"
+            android:textColor="#f00"
+            android:textSize="20sp"
+            android:gravity="center">
+        </TextView>
 
-</RelativeLayout>
+    </RelativeLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

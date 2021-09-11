@@ -11,9 +11,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.esgsubstitutionplanapp.content.ContentManager;
-import com.esgsubstitutionplanapp.content.model.SubstitutionType;
 import com.esgsubstitutionplanapp.ignorepackage.TestData;
 
 public class MainActivity extends Activity {
@@ -24,14 +24,12 @@ public class MainActivity extends Activity {
     // views
     private LinearLayout datePicker;
     private TextView noContentView;
-    private TextView myclassText;
-    private TextView allclassesText;
-    private TextView pauseText;
     private TextView errorText;
     private View contentContainer;
+    private TextView newsOfTheDayText;
 
-    // active values
-    private String activeDate;
+    // manual refresh
+    private SwipeRefreshLayout swipeContainer;
 
     // other fields
     private boolean doubleBackToExitPressedOnce = false;
@@ -44,60 +42,48 @@ public class MainActivity extends Activity {
         // set up view fields;
         datePicker = findViewById(R.id.datePicker);
         noContentView = findViewById(R.id.noContentView);
-        myclassText = findViewById(R.id.myclassText);
-        allclassesText = findViewById(R.id.allclassesText);
-        pauseText = findViewById(R.id.pauseText);
         errorText = findViewById(R.id.errorView);
         contentContainer = findViewById(R.id.contentContainer);
-
-        // setup
-        DB.setup();
-        TextView newsOfTheDayText = findViewById(R.id.newsoftheday);
+        newsOfTheDayText = findViewById(R.id.newsoftheday);
+        swipeContainer = findViewById(R.id.mainActivity);
         LinearLayout contentView = findViewById(R.id.contentView);
-        contentManager = new ContentManager(this, datePicker, contentView, noContentView, contentContainer, errorText);
+
+        // setup data
+        DB.setup();
+        contentManager = new ContentManager(this, datePicker, contentView, noContentView, contentContainer);
+
+        // set up refresh
+        // Your code to refresh the list here.
+        // Make sure you call swipeContainer.setRefreshing(false)
+        // once the network request has completed successfully.
+        swipeContainer.setOnRefreshListener(this::downloadAndShowContent);
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
 
         // set up test data
         TestData.setUpTestData();
 
-        // check settings and show content
+        // show settings or content
         if(DB.username.isEmpty() || DB.password.isEmpty()){
-            // check if settings are loaded correct
             startSettings(null);
         } else {
-            // everything looks fine, update content and show it
-            findViewById(R.id.mainActivity).setVisibility(View.VISIBLE);
-            try {
-                myclassText.setText(DB.myClass.getFullName());
-                contentManager.loadContent();
-                activeDate = contentManager.paintDateViews();
-                contentManager.filterSubstitutionsForClass();
-                contentManager.setUpContent();
-                myClassClicked(null);
-            } catch (Exception e){
-                showError(e);
-            }
+            downloadAndShowContent();
         }
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         if(DB.classChanged){
-            try {
-                DB.classChanged = false;
-                contentManager.filterSubstitutionsForClass();
-                contentManager.setUpContent();
-                myClassClicked(null);
-            } catch (Exception e){
-                showError(e);
-            }
+            DB.classChanged = false;
+            updateContent(DB.dates.first().getDate());
         }
     }
 
     public void dateClicked(TextView view, String date){
-        activeDate = date;
-
         // update frontend
         for(int index = 0; index < datePicker.getChildCount(); index++) {
             TextView current = (TextView) datePicker.getChildAt(index);
@@ -108,59 +94,33 @@ public class MainActivity extends Activity {
         view.setTextColor(getResources().getColor(R.color.activeText));
 
         // update content
-        myClassClicked(null);
+        updateContent(date);
     }
 
-    public void myClassClicked(View view){
-        // update frontend
-        myclassText.setBackgroundColor(getResources().getColor(R.color.activeSelector));
-        myclassText.setTextColor(getResources().getColor(R.color.activeText));
-        allclassesText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
-        allclassesText.setTextColor(getResources().getColor(R.color.inactiveText));
-        pauseText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
-        pauseText.setTextColor(getResources().getColor(R.color.inactiveText));
-
-        // update content
+    private void downloadAndShowContent(){
         try {
-            contentManager.updateContent(SubstitutionType.SUBSTITUTION_OF_MYCLASS, activeDate);
-        } catch (Exception e) {
+            errorText.setVisibility(View.GONE);
+            contentManager.downloadAndShowContent();
+            swipeContainer.setRefreshing(false);
+        } catch (Exception e){
             showError(e);
         }
     }
 
-    public void allClassesClicked(View view){
-        // update frontend
-        myclassText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
-        myclassText.setTextColor(getResources().getColor(R.color.inactiveText));
-        allclassesText.setBackgroundColor(getResources().getColor(R.color.activeSelector));
-        allclassesText.setTextColor(getResources().getColor(R.color.activeText));
-        pauseText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
-        pauseText.setTextColor(getResources().getColor(R.color.inactiveText));
-
-        // update content
+    private void updateContent(String date){
         try {
-            contentManager.updateContent(SubstitutionType.SUBSTITUTION_ALL, activeDate);
-        } catch (Exception e) {
+            errorText.setVisibility(View.GONE);
+            contentManager.filterSubstitutions(date);
+        } catch (Exception e){
             showError(e);
         }
     }
 
-    public void pauseClicked(View view){
-        // update frontend
-        myclassText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
-        myclassText.setTextColor(getResources().getColor(R.color.inactiveText));
-        allclassesText.setBackgroundColor(getResources().getColor(R.color.inActiveSelector));
-        allclassesText.setTextColor(getResources().getColor(R.color.inactiveText));
-        pauseText.setBackgroundColor(getResources().getColor(R.color.activeSelector));
-        pauseText.setTextColor(getResources().getColor(R.color.activeText));
-
-        // update content
-        try {
-            contentManager.updateContent(SubstitutionType.SUBSTITUTION_PAUSE, activeDate);
-        } catch (Exception e) {
-            showError(e);
-        }
-    }
+    //
+    //
+    // helper methods for starting and ending activities or showing messages
+    //
+    //
 
     public void startSettings(View view){
         Intent settings = new Intent(this, SettingsActivity.class);

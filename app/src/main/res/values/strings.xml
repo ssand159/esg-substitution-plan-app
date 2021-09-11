@@ -20,5 +20,5 @@
 
     <!-- welcome activity -->
     <string name="welcome_text1">Hallo!</string>
-    <string name="welcome_text2">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum!</string>
+    <string name="welcome_text2">Mit dieser App kannst du den Vertretungsplan abrufen. Viel Spaß damit!</string>
 </resources>

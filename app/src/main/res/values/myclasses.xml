@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="grades">
+        <item>alle</item>
         <item>05</item>
         <item>06</item>
         <item>07</item>

@@ -11,7 +11,7 @@ import com.esgsubstitutionplanapp.content.model.SubstitutionType;
 public class SubstitutionView extends LinearLayout {
 
     private String date;
-    private SubstitutionType substitutionType;
+    private String klassen;
 
     public SubstitutionView(Context context) {
         super(context);
@@ -33,15 +33,15 @@ public class SubstitutionView extends LinearLayout {
         this.date = date;
     }
 
-    public void setSubstitutionType(SubstitutionType substitutionType) {
-        this.substitutionType = substitutionType;
-    }
-
     public String getDate() {
         return date;
     }
 
-    public SubstitutionType getSubstitutionType() {
-        return substitutionType;
+    public void setKlassen(String klassen) {
+        this.klassen = klassen;
+    }
+
+    public String getKlassen() {
+        return klassen;
     }
 }

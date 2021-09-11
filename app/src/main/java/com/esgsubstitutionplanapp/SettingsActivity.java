@@ -52,7 +52,7 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
         System.out.println("SettingsActivity - " + letterAdapter.getPosition(DB.myClass.getLetter()));
 
         String grade = DB.myClass.getGrade();
-        if(grade.equals("11") || grade.equals("12") || grade.equals("13")){
+        if(grade.equals("alle") || grade.equals("11") || grade.equals("12") || grade.equals("13")){
             letterSpinner.setVisibility(View.INVISIBLE);
         }
 
