@@ -135,6 +135,7 @@
         android:onClick="startAbout"
         android:clickable="true"
         android:focusable="true"
+        android:visibility="gone"
         />
 
 </RelativeLayout>

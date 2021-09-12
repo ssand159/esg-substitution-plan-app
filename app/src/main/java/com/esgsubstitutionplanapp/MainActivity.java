@@ -63,7 +63,7 @@ public class MainActivity extends Activity {
 
 
         // set up test data
-        TestData.setUpTestData();
+//        TestData.setUpTestData();
 
         // show settings or content
         if(DB.username.isEmpty() || DB.password.isEmpty()){
