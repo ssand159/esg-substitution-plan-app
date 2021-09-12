@@ -12,7 +12,6 @@ import java.util.SortedSet;
 public class DB {
 
     private static SharedPreferences userPreferences;
-    private static SharedPreferences contentPreferences;
 
     // static fields
     public static final String endpoint = "https://www.esg-landau.de/unterstuetzung/informationen/vertretungsplan";
@@ -36,19 +35,19 @@ public class DB {
         DB.password = password;
         DB.myClass = myClass;
 
-        DB.classChanged = true;
-
         SharedPreferences.Editor editor = userPreferences.edit();
         editor.putString("user", username);
         editor.putString("password", password);
         editor.putString("grade", myClass.getGrade());
         editor.putString("letter", myClass.getLetter());
         editor.apply();
+
+        // triggers content refresh in MainActivity
+        DB.classChanged = true;
     }
 
-    public static void setPreferences(SharedPreferences userPreferences, SharedPreferences dataPreferences){
+    public static void setPreferences(SharedPreferences userPreferences){
         DB.userPreferences = userPreferences;
-        DB.contentPreferences = dataPreferences;
         DB.wasStartedBefore = userPreferences.getBoolean("wasStartedBefore", false);
     }
 
