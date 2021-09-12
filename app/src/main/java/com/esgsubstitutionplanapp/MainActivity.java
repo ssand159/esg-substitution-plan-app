@@ -26,7 +26,6 @@ public class MainActivity extends Activity {
     private TextView noContentView;
     private TextView errorText;
     private View contentContainer;
-    private TextView newsOfTheDayText;
 
     // manual refresh
     private SwipeRefreshLayout swipeContainer;
@@ -44,7 +43,7 @@ public class MainActivity extends Activity {
         noContentView = findViewById(R.id.noContentView);
         errorText = findViewById(R.id.errorView);
         contentContainer = findViewById(R.id.contentContainer);
-        newsOfTheDayText = findViewById(R.id.newsoftheday);
+        TextView newsOfTheDayText = findViewById(R.id.newsoftheday);
         swipeContainer = findViewById(R.id.mainActivity);
         LinearLayout contentView = findViewById(R.id.contentView);
 
@@ -54,7 +53,7 @@ public class MainActivity extends Activity {
 
         // force refresh
         swipeContainer.setOnRefreshListener(() -> {
-            downloadAndShowContent();
+            downloadAndShowContent(true);
             datePicker.getChildAt(0).performClick();
         });
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -70,7 +69,7 @@ public class MainActivity extends Activity {
         if(DB.username.isEmpty() || DB.password.isEmpty()){
             startSettings(null);
         } else {
-            downloadAndShowContent();
+            downloadAndShowContent(false);
             datePicker.getChildAt(0).performClick();
         }
     }
@@ -98,10 +97,10 @@ public class MainActivity extends Activity {
         updateContent(date);
     }
 
-    private void downloadAndShowContent(){
+    private void downloadAndShowContent(boolean forceDownload){
         try {
             errorText.setVisibility(View.GONE);
-            contentManager.downloadAndShowContent();
+            contentManager.downloadAndShowContent(forceDownload);
             swipeContainer.setRefreshing(false);
         } catch (Exception e){
             showError(e);

@@ -17,6 +17,7 @@ public class WelcomeActivity extends Activity {
         setContentView(R.layout.activity_welcome);
 
         DB.setPreferences(getSharedPreferences("userdata", MODE_PRIVATE), getSharedPreferences("contentdata", MODE_PRIVATE));
+        DB.lastUpdate = 0;
     }
 
     @Override

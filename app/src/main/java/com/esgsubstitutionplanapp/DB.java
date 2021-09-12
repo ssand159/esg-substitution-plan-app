@@ -29,6 +29,7 @@ public class DB {
     // content
     public static SortedSet<Date> dates;
     public static ArrayList<Substitution> substitutions;
+    public static long lastUpdate;
 
     public static void saveUserData(String username, String password, MyClass myClass){
         DB.username = username;

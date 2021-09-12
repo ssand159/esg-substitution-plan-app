@@ -20,6 +20,8 @@ import java.util.concurrent.ExecutionException;
 
 public class ContentManager {
 
+    private final static long FIVE_MINUTES_IN_MILLIS = 300_000;
+
     private final MainActivity mainActivity;
     private final LinearLayout datePicker;
     private final LinearLayout contentView;
@@ -36,8 +38,10 @@ public class ContentManager {
         this.newsOfTheDayView = newsOfTheDayView;
     }
 
-    public void downloadAndShowContent() throws ExecutionException, InterruptedException {
-        new RetrieveContentTask().execute().get();
+    public void downloadAndShowContent(boolean forceDownload) throws ExecutionException, InterruptedException {
+        if(forceDownload || isDownloadRequired()){
+            new RetrieveContentTask().execute().get();
+        }
         paintDateViews();
         paintSubstitutionViews();
         changeDay(DB.dates.first().getDate());
@@ -46,6 +50,11 @@ public class ContentManager {
     public void changeDay(String activeDate){
         filterSubstitutionforDay(activeDate);
         showNewsOfTheDay(activeDate);
+    }
+
+    private boolean isDownloadRequired(){
+        // is last update older than 5 minutes?
+        return System.currentTimeMillis() > DB.lastUpdate + FIVE_MINUTES_IN_MILLIS;
     }
 
     private void filterSubstitutionforDay(String activeDate){
@@ -164,6 +173,9 @@ public class ContentManager {
 
                 // parse content and filter it according to user settings
                 ContentParser.parseContent(html);
+
+                // save timestamp
+                DB.lastUpdate = System.currentTimeMillis();
 
             } catch (Exception e){
                 e.printStackTrace();
