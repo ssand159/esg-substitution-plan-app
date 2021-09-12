@@ -39,7 +39,8 @@ public class ContentManager {
     }
 
     public void downloadAndShowContent(boolean forceDownload) throws ExecutionException, InterruptedException {
-        if(forceDownload || isDownloadRequired()){
+        if(forceDownload || System.currentTimeMillis() > DB.lastUpdate + FIVE_MINUTES_IN_MILLIS){
+            // download only required if forced or last update is older than 5 minutes
             new RetrieveContentTask().execute().get();
         }
         paintDateViews();
@@ -50,11 +51,6 @@ public class ContentManager {
     public void changeDay(String activeDate){
         filterSubstitutionforDay(activeDate);
         showNewsOfTheDay(activeDate);
-    }
-
-    private boolean isDownloadRequired(){
-        // is last update older than 5 minutes?
-        return System.currentTimeMillis() > DB.lastUpdate + FIVE_MINUTES_IN_MILLIS;
     }
 
     private void filterSubstitutionforDay(String activeDate){
