@@ -1,6 +1,5 @@
 package com.esgsubstitutionplanapp.content.model;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 public class Date implements Comparable<Date> {
@@ -9,7 +8,6 @@ public class Date implements Comparable<Date> {
     private final int month;
     private final int day;
     private String newsOfTheDay;
-    public static ArrayList<Substitution> substitutions;
 
     public Date(String datum){
         this.date = datum;
