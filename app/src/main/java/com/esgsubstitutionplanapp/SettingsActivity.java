@@ -81,7 +81,7 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
     }
 
     public void startAbout(View view){
-        Intent settings = new Intent(this, SettingsActivity.class);
+        Intent settings = new Intent(this, AboutActivity.class);
         startActivity(settings);
     }
 
