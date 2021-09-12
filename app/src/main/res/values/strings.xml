@@ -17,6 +17,10 @@
     <string name="settings_nutzername">Nutzername</string>
     <string name="settings_passwort">Passwort</string>
     <string name="settings_saveButton">Speichern</string>
+    <string name="settings_aboutButton">Über diese App</string>
+
+    <!-- about activity -->
+    <string name="about_text1">Diese App wird privat entwickelt</string>
 
     <!-- welcome activity -->
     <string name="welcome_text1">Hallo!</string>

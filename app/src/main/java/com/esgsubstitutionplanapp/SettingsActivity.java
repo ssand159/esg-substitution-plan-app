@@ -1,6 +1,7 @@
 package com.esgsubstitutionplanapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
@@ -77,6 +78,11 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
         DB.saveUserData(user, password, new MyClass(grade, letter));
 
         Toast.makeText(this, "Einstellungen wurden gespeichert", Toast.LENGTH_SHORT).show();
+    }
+
+    public void startAbout(View view){
+        Intent settings = new Intent(this, SettingsActivity.class);
+        startActivity(settings);
     }
 
     private boolean validate(String user, String password){

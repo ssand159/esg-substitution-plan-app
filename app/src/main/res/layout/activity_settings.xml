@@ -119,5 +119,23 @@
         android:background="@drawable/button"
         />
 
+    <TextView
+        android:id="@+id/about"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:padding="10dp"
+        android:text="@string/settings_aboutButton"
+        android:textColor="#aaa"
+        android:layout_below="@+id/save"
+        android:gravity="center"
+        android:onClick="startAbout"
+        android:clickable="true"
+        android:focusable="true"
+        />
+
 </RelativeLayout>
 </ScrollView>
