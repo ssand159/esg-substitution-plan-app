@@ -4,8 +4,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class Substitution {
 
-    private SubstitutionType type;
-
     private String klassen;
     private String datum;
     private String std;
@@ -34,14 +32,6 @@ public class Substitution {
                 ", bemerkung='" + bemerkung + "\n" +
                 ", verlegtVon='" + verlegtVon + "\n" +
                 '}';
-    }
-
-    public void setType(SubstitutionType type) {
-        this.type = type;
-    }
-
-    public SubstitutionType getType() {
-        return type;
     }
 
     public String getKlassen() {

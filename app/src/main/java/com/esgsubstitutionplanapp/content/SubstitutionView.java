@@ -6,8 +6,6 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
 
-import com.esgsubstitutionplanapp.content.model.SubstitutionType;
-
 public class SubstitutionView extends LinearLayout {
 
     private String date;

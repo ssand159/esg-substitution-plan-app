@@ -129,7 +129,7 @@
 
         <TextView
             android:id="@+id/noContentView"
-            android:layout_below="@+id/classPicker"
+            android:layout_below="@+id/datePicker"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/main_noContentText"
@@ -141,7 +141,7 @@
 
         <TextView
             android:id="@+id/errorView"
-            android:layout_below="@+id/classPicker"
+            android:layout_below="@+id/datePicker"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/main_errorText"
