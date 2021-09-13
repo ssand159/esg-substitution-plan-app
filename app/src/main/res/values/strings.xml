@@ -8,7 +8,7 @@
     <string name="main_buttonAllClasses">Alle</string>
     <string name="main_buttonPause">Pause</string>
     <string name="main_noContentText">Keine Ankündigungen vorhanden</string>
-    <string name="main_errorText">Leider gab es einen technischen Fehler. Bitte versuche es später nochmal</string>
+    <string name="main_errorText">Leider gab es einen technischen Fehler. Bitte versuche es später nochmal und prüfe ob die Zugangsdaten korrekt sind.</string>
 
     <!-- settings activity -->
     <string name="settings_activity_title">Einstellungen</string>
@@ -24,10 +24,12 @@
     <string name="about_text1">Die App wird privat und ohne Unterstützung der Schule entwickelt.</string>
     <string name="about_text2">Es werden keinerlei persönliche Daten gesammelt.</string>
     <string name="about_text3">Da nur wenige Testgeräte zur Verfügung stehen, kann nicht garantiert werden, dass die Darstellung auf allen Displays einwandfrei funktioniert. Vor allem für Tablets gibt es derzeit noch kein eigenes Layout.</string>
-    <string name="about_text4">Für Fragen, Anregungen und Wünschen kannst gerne eine Nachricht schicken. Bei Problemen ebenfalls, aber bitte denke an einen aussagekräftigen Screenshot im Anhang</string>
+    <string name="about_text4">Für Fragen, Anregungen, Wünschen und Hilfestellungen bei Problemen kannst du gerne eine Nachricht senden. Bei Darstellungsfehlern denke bitte an einen aussagekräftigen Screenshot im Anhang.</string>
     <string name="about_mailButton">E-Mail senden</string>
 
     <!-- welcome activity -->
     <string name="welcome_text1">Hallo!</string>
-    <string name="welcome_text2">Mit dieser App kannst du den Vertretungsplan abrufen. Viel Spaß damit!</string>
+    <string name="welcome_text2">Mit dieser App kannst du den Vertretungsplan abrufen.</string>
+    <string name="welcome_text3">Im nächsten Schritt wirst du nach den Zugangsdaten gefragt. Du kannst außerdem deine Klasse wählen.</string>
+    <string name="welcome_button">Los geht\'s!</string>
 </resources>
