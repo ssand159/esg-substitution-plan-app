@@ -20,7 +20,12 @@
     <string name="settings_aboutButton">Über diese App</string>
 
     <!-- about activity -->
-    <string name="about_text1">Diese App wird privat entwickelt</string>
+    <string name="about_title">Über diese App</string>
+    <string name="about_text1">Die App wird privat und ohne Unterstützung der Schule entwickelt.</string>
+    <string name="about_text2">Es werden keinerlei persönliche Daten gesammelt.</string>
+    <string name="about_text3">Da nur wenige Testgeräte zur Verfügung stehen, kann nicht garantiert werden, dass die Darstellung auf allen Displays einwandfrei funktioniert. Vor allem für Tablets gibt es derzeit noch kein eigenes Layout.</string>
+    <string name="about_text4">Für Fragen, Anregungen und Wünschen kannst gerne eine Nachricht schicken. Bei Problemen ebenfalls, aber bitte denke an einen aussagekräftigen Screenshot im Anhang</string>
+    <string name="about_mailButton">E-Mail senden</string>
 
     <!-- welcome activity -->
     <string name="welcome_text1">Hallo!</string>
