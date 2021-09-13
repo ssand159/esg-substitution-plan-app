@@ -70,7 +70,11 @@ public class MainActivity extends Activity {
             startSettings(null);
         } else {
             downloadAndShowContent(false);
-            datePicker.getChildAt(0).performClick();
+            try {
+                datePicker.getChildAt(0).performClick();
+            } catch (Exception e){
+                showError(e);
+            }
         }
     }
 
