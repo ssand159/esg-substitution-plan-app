@@ -11,43 +11,16 @@ xmlns:android="http://schemas.android.com/apk/res/android"
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         >
 
         <LinearLayout
-            android:id="@+id/leftColumn"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:id="@+id/topRow"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             >
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:measureWithLargestChild="true"
-                android:layout_gravity="center_horizontal"
-                >
-                <TextView
-                    android:id="@+id/headlineMain"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:textSize="@dimen/textsize_headline"
-                    android:layout_margin="10dp"
-                    android:text="@string/main_activity_title"
-                    />
-
-                <LinearLayout
-                    android:id="@+id/datePicker"
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    />
-
-            </LinearLayout>
             <ImageButton
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -57,26 +30,45 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                 android:focusable="true"
                 android:onClick="startSettings"
                 android:contentDescription="@string/main_buttonSettings"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="5dp"
+                />
+            <TextView
+                android:id="@+id/headlineMain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="@dimen/textsize_headline"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:text="@string/main_activity_title"
+                />
+
+            <LinearLayout
+                android:id="@+id/datePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
                 />
 
         </LinearLayout>
 
         <RelativeLayout
-            android:id="@+id/rightColumn"
+            android:id="@+id/bottomRow"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
             >
             <TextView
                 android:id="@+id/newsoftheday"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
                 android:background="#f7af3b"
-                android:gravity="start"
+                android:gravity="left"
                 android:padding="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginEnd="5dp"
                 android:textSize="20sp"
                 android:visibility="gone"
                 />
@@ -86,8 +78,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_below="@id/newsoftheday"
-                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@id/newsoftheday"
                 >
                 <LinearLayout
                     android:layout_width="wrap_content"
