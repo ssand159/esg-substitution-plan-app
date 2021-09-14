@@ -16,7 +16,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:layout_marginBottom="20dp"
-    tools:context="com.esgsubstitutionplanapp.SettingsActivity">
+    tools:context="com.esgsubstitutionplanapp.SettingsActivity"
+    android:gravity="center_horizontal">
 
     <TextView
         android:id="@+id/headlineSettings"
@@ -119,23 +120,37 @@
         android:background="@drawable/button"
         />
 
-    <TextView
-        android:id="@+id/about"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="start"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="24dp"
-        android:padding="10dp"
-        android:text="@string/settings_aboutButton"
-        android:textColor="#aaa"
+        android:orientation="horizontal"
         android:layout_below="@+id/save"
+        android:layout_marginTop="20dp"
         android:gravity="center"
-        android:onClick="startAbout"
-        android:clickable="true"
-        android:focusable="true"
-        />
+        >
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/info_icon"
+            android:background="@null"
+            android:clickable="true"
+            android:focusable="true"
+            android:onClick="startAbout"
+            android:contentDescription="Über diese App" />
+
+        <TextView
+            android:id="@+id/about"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_gravity="start"
+            android:text="@string/settings_aboutButton"
+            android:textColor="#aaa"
+            android:gravity="center"
+            android:onClick="startAbout"
+            android:clickable="true"
+            android:focusable="true"
+            />
+    </LinearLayout>
 
 </RelativeLayout>
 </ScrollView>
