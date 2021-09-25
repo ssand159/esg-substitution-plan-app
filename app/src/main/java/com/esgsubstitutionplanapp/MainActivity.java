@@ -65,6 +65,9 @@ public class MainActivity extends Activity {
         // set up test data
 //        TestData.setUpTestData();
 
+        // set text for noContentView
+        noContentView.setText("Heute ist keine Ankündigung für " + DB.myClass.getFullName() + " vorhanden");
+
         // show settings or content
         if(DB.username.isEmpty() || DB.password.isEmpty()){
             startSettings(null);

@@ -7,7 +7,7 @@
     <string name="main_buttonSettings">Einstellungen</string>
     <string name="main_buttonAllClasses">Alle</string>
     <string name="main_buttonPause">Pause</string>
-    <string name="main_noContentText">Keine Ankündigungen vorhanden</string>
+    <string name="main_noContentText">Heute ist keine Ankündigungen vorhanden</string>
     <string name="main_errorText">Leider gab es einen technischen Fehler. Bitte versuche es später nochmal und prüfe ob die Zugangsdaten korrekt sind.</string>
 
     <!-- settings activity -->
