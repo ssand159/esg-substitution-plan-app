@@ -31,19 +31,32 @@ public class WelcomeActivity extends Activity {
     }
 
     public void clickButton1(View view){
+        // hide clicked button
         View button1 = findViewById(R.id.welcomeButton1);
-        button1.setVisibility(View.GONE);
+        button1.setVisibility(View.INVISIBLE);
+        // show next button
         View button2 = findViewById(R.id.welcomeButton2);
         button2.setVisibility(View.VISIBLE);
+        // animate text
         TextView welcome2 = findViewById(R.id.welcomeText2);
         welcome2.setVisibility(View.VISIBLE);
         animate(welcome2);
     }
 
-    public void finish(View view){
-        // save status
-        DB.setWasStartedBefore(true);
+    public void clickButton2(View view){
+        // hide clicked button
+        View button2 = findViewById(R.id.welcomeButton2);
+        button2.setVisibility(View.INVISIBLE);
+        // show next button
+        TextView button3 = findViewById(R.id.welcomeButton3);
+        button3.setVisibility(View.VISIBLE);
+        // animate text
+        TextView welcome3 = findViewById(R.id.welcomeText3);
+        welcome3.setVisibility(View.VISIBLE);
+        animate(welcome3);
+    }
 
+    public void finish(View view){
         // start main
         Intent main = new Intent(this, MainActivity.class);
         startActivity(main);

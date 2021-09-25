@@ -60,9 +60,9 @@ public class DB {
         DB.myClass = new MyClass(grade, letter);
     }
 
-    public static void setWasStartedBefore(boolean wasStartedBefore) {
+    public static void setWasStartedBefore() {
         SharedPreferences.Editor editor = userPreferences.edit();
-        editor.putBoolean("wasStartedBefore", wasStartedBefore);
+        editor.putBoolean("wasStartedBefore", true);
         editor.apply();
         DB.wasStartedBefore = true;
     }

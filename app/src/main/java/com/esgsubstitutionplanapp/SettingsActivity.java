@@ -61,6 +61,7 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
 
     public void saveData(View view){
         System.out.println("SettingsActivity - save");
+
         String user = usernameField.getText().toString();
         String password = passwordField.getText().toString();
         String grade = gradeSpinner.getSelectedItem().toString();
@@ -76,6 +77,7 @@ public class SettingsActivity extends Activity implements AdapterView.OnItemSele
 
         // sava data & update content
         DB.saveUserData(user, password, new MyClass(grade, letter));
+        DB.setWasStartedBefore();
 
         Toast.makeText(this, "Einstellungen wurden gespeichert", Toast.LENGTH_SHORT).show();
     }
