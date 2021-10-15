@@ -74,7 +74,11 @@ public class MainActivity extends Activity {
         } else {
             downloadAndShowContent(false);
             try {
-                datePicker.getChildAt(0).performClick();
+                if(DB.dates.isEmpty()){
+                    noContentView.setVisibility(View.VISIBLE);
+                } else {
+                    datePicker.getChildAt(0).performClick();
+                }
             } catch (Exception e){
                 showError(e);
             }

@@ -45,7 +45,9 @@ public class ContentManager {
         }
         paintDateViews();
         paintSubstitutionViews();
-        changeDay(DB.dates.first().getDate());
+        if(!DB.dates.isEmpty()){
+            changeDay(DB.dates.first().getDate());
+        }
     }
 
     public void changeDay(String activeDate){
