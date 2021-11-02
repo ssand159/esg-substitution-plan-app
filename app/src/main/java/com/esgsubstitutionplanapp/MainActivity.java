@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.esgsubstitutionplanapp.content.ContentManager;
+import com.esgsubstitutionplanapp.content.model.MyTextView;
 import com.esgsubstitutionplanapp.ignorepackage.TestData;
 
 public class MainActivity extends Activity {
@@ -43,7 +44,7 @@ public class MainActivity extends Activity {
         noContentView = findViewById(R.id.noContentView);
         errorText = findViewById(R.id.errorView);
         contentContainer = findViewById(R.id.contentContainer);
-        TextView newsOfTheDayText = findViewById(R.id.newsoftheday);
+        MyTextView newsOfTheDayText = findViewById(R.id.newsoftheday);
         swipeContainer = findViewById(R.id.mainActivity);
         LinearLayout contentView = findViewById(R.id.contentView);
 
@@ -136,6 +137,13 @@ public class MainActivity extends Activity {
     public void startSettings(View view){
         Intent settings = new Intent(this, SettingsActivity.class);
         startActivity(settings);
+    }
+
+    public void startNews(View view){
+        MyTextView myTextView = (MyTextView) view;
+        Intent news = new Intent(this, NewsOfTheDayActivity.class);
+        news.putExtra("news", myTextView.getHiddenText());
+        startActivity(news);
     }
 
     private void showError(Exception e){

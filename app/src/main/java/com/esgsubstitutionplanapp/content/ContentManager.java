@@ -14,6 +14,7 @@ import com.esgsubstitutionplanapp.MainActivity;
 import com.esgsubstitutionplanapp.R;
 import com.esgsubstitutionplanapp.connection.ConnectionClient;
 import com.esgsubstitutionplanapp.content.model.Date;
+import com.esgsubstitutionplanapp.content.model.MyTextView;
 import com.esgsubstitutionplanapp.content.model.Substitution;
 
 import java.util.concurrent.ExecutionException;
@@ -27,9 +28,9 @@ public class ContentManager {
     private final LinearLayout contentView;
     private final View contentContainer;
     private final TextView noContentView;
-    private final TextView newsOfTheDayView;
+    private final MyTextView newsOfTheDayView;
 
-    public ContentManager(MainActivity mainActivity, LinearLayout datePicker, LinearLayout contentView, TextView noContentView, View contentContainer, TextView newsOfTheDayView){
+    public ContentManager(MainActivity mainActivity, LinearLayout datePicker, LinearLayout contentView, TextView noContentView, View contentContainer, MyTextView newsOfTheDayView){
         this.mainActivity = mainActivity;
         this.datePicker = datePicker;
         this.contentView = contentView;
@@ -86,7 +87,7 @@ public class ContentManager {
             if(date.getDate().equals(activeDate)){
                 String newsOfTheDay = date.getNewsOfTheDay();
                 if(newsOfTheDay != null && !newsOfTheDay.isEmpty()){
-                    newsOfTheDayView.setText(newsOfTheDay);
+                    newsOfTheDayView.setHiddenText(newsOfTheDay);
                     newsOfTheDayView.setVisibility(View.VISIBLE);
                 } else {
                     newsOfTheDayView.setVisibility(View.GONE);

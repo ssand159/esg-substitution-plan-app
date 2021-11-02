@@ -9,6 +9,7 @@
     <string name="main_buttonPause">Pause</string>
     <string name="main_noContentText">Heute ist keine Ankündigungen vorhanden</string>
     <string name="main_errorText">Leider gab es einen technischen Fehler. Bitte versuche es später nochmal und prüfe ob die Zugangsdaten korrekt sind.</string>
+    <string name="main_newsOfTheDay">Info des Tages anzeigen</string>
 
     <!-- settings activity -->
     <string name="settings_activity_title">Einstellungen</string>

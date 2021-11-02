@@ -52,11 +52,12 @@
             android:paddingRight="16dp"
             />
 
-        <TextView
+        <com.esgsubstitutionplanapp.content.model.MyTextView
             android:id="@+id/newsoftheday"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/datePicker"
+            android:text="@string/main_newsOfTheDay"
             android:background="#f7af3b"
             android:gravity="start"
             android:padding="5dp"
@@ -65,6 +66,8 @@
             android:visibility="gone"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
+            android:clickable="true"
+            android:onClick="startNews"
             />
 
         <LinearLayout
